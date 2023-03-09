@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDB;
-    EditText editCode, editStart, editMid1, editMid2, editEnd;
+    EditText editCode, editLocation;
     Button btnAdd, btnRouteSelect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +21,7 @@ public class MainActivity extends AppCompatActivity {
         myDB = new DatabaseHelper(this);
 
         editCode = (EditText) findViewById(R.id.text_code);
-        editStart = (EditText) findViewById(R.id.text_start);
-        editMid1 = (EditText) findViewById(R.id.text_mid1);
-        editMid2 = (EditText) findViewById(R.id.text_mid2);
-        editEnd = (EditText) findViewById(R.id.text_end);
+        editLocation = (EditText) findViewById(R.id.text_locations);
         btnAdd = (Button) findViewById(R.id.button_add);
         AddData();
         OnClickRouteSelect();
@@ -36,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         boolean isInserted = myDB.insertData(editCode.getText().toString(),
-                                editStart.getText().toString(),
-                                editMid1.getText().toString(), editMid2.getText().toString(),
-                                editEnd.getText().toString());
+                                editLocation.getText().toString());
                         if (isInserted){
                             Toast.makeText(MainActivity.this, "Data successfully inserted",
                                     Toast.LENGTH_SHORT).show();

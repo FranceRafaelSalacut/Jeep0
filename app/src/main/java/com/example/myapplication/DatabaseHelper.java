@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -13,10 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "Routes";
     public static final String col1 = "ID";
     public static final String col2 = "code";
-    public static final String col3 = "start_point";
-    public static final String col4 = "mid_point_1";
-    public static final String col5 = "mid_point_2";
-    public static final String col6 = "end_point";
+    public static final String col3 = "locations";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -25,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER, code TEXT, start_point TEXT, mid_point_1 TEXT, mid_point_2 TEXT, end_point TEXT, PRIMARY KEY(ID))");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER, code TEXT, locations TEXT, PRIMARY KEY(ID))");
     }
 
     @Override
@@ -34,16 +32,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String code, String start, String mid1, String mid2, String end){
+    public boolean insertData(String code, String locations){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(col2, code);
-        contentValues.put(col3, start);
-        contentValues.put(col4, mid1);
-        contentValues.put(col5, mid2);
-        contentValues.put(col6, end);
+        contentValues.put(col3, locations);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         return result != -1;
+    }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return res;
     }
 }
