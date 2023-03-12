@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Jeep0 Dev Build</string>
+    <string name="menu">menu</string>
+    <string name="your_destination">Your Destination</string>
+    <string name="fare">fare</string>
+    <string name="input_location">Your Location</string>
+    <string name="code">code</string>
+    <string name="km">km</string>
+    <string name="use_gps">Use GPS</string>
+    <string name="routes">Routes</string>
+    <string name="to_be_shown">To be displayed</string>
+    <string name="jeepo">Jeep</string>
 </resources>

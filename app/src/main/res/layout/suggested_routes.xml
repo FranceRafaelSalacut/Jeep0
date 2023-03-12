@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#509689"
+    android:backgroundTint="#509689"
+    tools:context=".SuggestedRoutes">
+
+    <TextView
+        android:id="@+id/Jeepo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#509689"
+        android:fontFamily="@font/lobster_two"
+        android:text="@string/jeepo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.041" />
+
+    <ImageView
+        android:layout_width="102dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="84dp"
+        android:contentDescription="@null"
+        android:src="@drawable/jeep_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/hamburgerIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        android:background="#509588"
+        android:contentDescription="@string/menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hamburger_icon" />
+
+    <EditText
+        android:id="@+id/Destination"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="101dp"
+        android:autofillHints="no"
+        android:background="#9ADDC1"
+        android:ems="10"
+        android:fontFamily="@font/poppins_new"
+        android:gravity="center_vertical"
+        android:hint="@string/your_destination"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
+
+    <EditText
+        android:id="@+id/Location"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="101dp"
+        android:autofillHints="no"
+        android:background="#C1EAD9"
+        android:ems="10"
+        android:fontFamily="@font/poppins_new"
+        android:gravity= "center_vertical"
+        android:hint="@string/input_location"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
+
+    <EditText
+        android:id="@+id/Fare"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="28dp"
+        android:background="#C1EAD9"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="none"
+        android:focusable="false"
+        android:text="@string/fare"
+        android:textSize="20sp"
+        android:autofillHints="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
+
+    <EditText
+        android:id="@+id/Code"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="28dp"
+        android:background="#C1EAD9"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="none"
+        android:focusable="false"
+        android:text="@string/code"
+        android:textSize="18sp"
+        android:autofillHints="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
+
+    <EditText
+        android:id="@+id/Km"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="28dp"
+        android:background="#C1EAD9"
+        android:ems="10"
+        android:textAlignment="center"
+        android:focusable="false"
+        android:inputType="none"
+        android:text="@string/km"
+        android:textSize="18sp"
+        android:autofillHints="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
+
+    <EditText
+        android:id="@+id/SuggestedRoutes"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="101dp"
+        android:autofillHints="none"
+        android:background="#9ADDC1"
+        android:ems="10"
+        android:fontFamily="@font/poppins_new"
+        android:gravity="center"
+        android:inputType="none"
+        android:focusable="false"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/routes"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="107dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="@string/use_gps"
+        android:textColor="@color/black"
+        app:backgroundTint="#9ADDC1"
+        app:layout_constraintBottom_toTopOf="@+id/Location"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="310dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="51dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Fare">
+
+
+        <LinearLayout
+            android:id="@+id/RouteLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/RouteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_new"
+                android:text="@string/to_be_shown"
+                android:textColor="@color/black"
+                app:backgroundTint="#D9D9D9" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
