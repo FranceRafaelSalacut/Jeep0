@@ -8,6 +8,7 @@
     android:backgroundTint="#509689"
     tools:context=".SuggestedRoutes">
 
+    <!-- Jeepo Text-->
     <TextView
         android:id="@+id/Jeepo"
         android:layout_width="wrap_content"
@@ -25,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.041" />
 
+    <!-- Jeepo Icon -->
     <ImageView
         android:layout_width="102dp"
         android:layout_height="27dp"
@@ -35,6 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Hamburger Icon -->
     <ImageButton
         android:id="@+id/hamburgerIcon"
         android:layout_width="48dp"
@@ -47,6 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hamburger_icon" />
 
+    <!-- Destination Textbox -->
     <EditText
         android:id="@+id/Destination"
         android:layout_width="311dp"
@@ -69,6 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
 
+    <!--Location Text Box -->
     <EditText
         android:id="@+id/Location"
         android:layout_width="311dp"
@@ -142,6 +147,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
 
+    <!-- Suggested Routes -->
     <EditText
         android:id="@+id/SuggestedRoutes"
         android:layout_width="311dp"
@@ -165,6 +171,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
 
+    <!-- Use GPS Button -->
     <Button
         android:id="@+id/button2"
         android:layout_width="107dp"
@@ -178,6 +185,7 @@
         app:layout_constraintBottom_toTopOf="@+id/Location"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Show suggested routes -->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="310dp"

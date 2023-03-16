@@ -14,7 +14,7 @@ public class MainInterface extends AppCompatActivity {
         setContentView(R.layout.activity_maininterface);
 
         new Handler().postDelayed(() -> {
-
+            //Show beginning interface for 5 seconds
             Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
             startActivity(intent);
         }, 1000);
