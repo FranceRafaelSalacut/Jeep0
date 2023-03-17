@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDB;
-    EditText editCode, editLocation;
+    EditText editCode, editLocationID, editLocation;
     Button btnAdd, btnRouteSelect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,28 +23,28 @@ public class MainActivity extends AppCompatActivity {
         editCode = (EditText) findViewById(R.id.text_code);
         editLocation = (EditText) findViewById(R.id.text_locations);
         btnAdd = (Button) findViewById(R.id.button_add);
-        AddData();
+        //AddData();
         OnClickRouteSelect();
     }
 
-    public void AddData(){
-        btnAdd.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        boolean isInserted = myDB.insertData(editCode.getText().toString(),
-                                editLocation.getText().toString());
-                        if (isInserted){
-                            Toast.makeText(MainActivity.this, "Data successfully inserted",
-                                    Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Failed to insert data",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-        );
-    }
+//    public void AddData(){
+//        btnAdd.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        boolean isInserted = myDB.insertData(editCode.getText().toString(),
+//                                editLocationID.getText(), editLocation.getText().toString());
+//                        if (isInserted){
+//                            Toast.makeText(MainActivity.this, "Data successfully inserted",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            Toast.makeText(MainActivity.this, "Failed to insert data",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//        );
+//    }
 
     public void OnClickRouteSelect(){
         btnRouteSelect = (Button) findViewById(R.id.button_routeselect);

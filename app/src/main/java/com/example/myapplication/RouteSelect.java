@@ -41,7 +41,8 @@ public class RouteSelect extends AppCompatActivity {
                         while(res.moveToNext()){
                             bfr.append("ID: " + res.getString(0) + "\n");
                             bfr.append("Code: " + res.getString(1) + "\n");
-                            bfr.append("Locations: " + res.getString(2) + "\n\n");
+                            bfr.append("Location ID: " + res.getString(2) + "\n\n");
+                            bfr.append("Location: " + res.getString(2) + "\n\n");
                         }
                         txt.setText(bfr.toString());
                         //ShowMsg("Data", bfr.toString());
