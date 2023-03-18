@@ -19,7 +19,6 @@ public class RouteSelect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_select);
         myDB = new DatabaseHelper(this);
-
         btnFindRoutes = (Button) findViewById(R.id.button_findroutes);
         FindRoutes();
     }
@@ -41,8 +40,8 @@ public class RouteSelect extends AppCompatActivity {
                         while(res.moveToNext()){
                             bfr.append("ID: " + res.getString(0) + "\n");
                             bfr.append("Code: " + res.getString(1) + "\n");
-                            bfr.append("Location ID: " + res.getString(2) + "\n\n");
-                            bfr.append("Location: " + res.getString(2) + "\n\n");
+                            bfr.append("Location ID: " + res.getString(2) + "\n");
+                            bfr.append("Location: " + res.getString(3) + "\n\n");
                         }
                         txt.setText(bfr.toString());
                         //ShowMsg("Data", bfr.toString());
