@@ -67,6 +67,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         });
     }
 
+    //This is where the query happens. Two locations is accepted and outputs suggestions
     private void executeQuery(String location1, String location2, TextView textView) {
         SQLiteDatabase db = myDB.getReadableDatabase();
         String query = "SELECT Code FROM Routes WHERE location IN (?, ?) GROUP BY Code HAVING COUNT(DISTINCT location) = 2";
