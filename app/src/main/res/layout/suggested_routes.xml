@@ -9,6 +9,7 @@
     tools:context=".SuggestedRoutes">
 
     <!-- Jeepo Text-->
+
     <TextView
         android:id="@+id/Jeepo"
         android:layout_width="wrap_content"
@@ -185,39 +186,18 @@
         app:layout_constraintBottom_toTopOf="@+id/Location"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Show suggested routes -->
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="310dp"
-        android:layout_height="218dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="51dp"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="166dp"
+        android:layout_height="102dp"
+        android:text="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Fare">
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes"
+        app:layout_constraintVertical_bias="0.663" />
 
-
-        <LinearLayout
-            android:id="@+id/RouteLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <Button
-                android:id="@+id/RouteButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_new"
-                android:text="@string/to_be_shown"
-                android:textColor="@color/black"
-                app:backgroundTint="#D9D9D9" />
-        </LinearLayout>
-    </ScrollView>
+    <!-- Show suggested routes -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

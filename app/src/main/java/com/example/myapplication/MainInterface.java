@@ -19,7 +19,7 @@ public class MainInterface extends AppCompatActivity {
         myDB = new DatabaseHelper(this);
 
         //database is already loaded, don't load data yet
-        //loadData();
+        loadData();
 
         new Handler().postDelayed(() -> {
             //Show beginning interface for 5 seconds
