@@ -70,12 +70,12 @@ public class SuggestedRoutes extends AppCompatActivity {
     //This is where the query happens. Two locations is accepted and outputs suggestions
     private void executeQuery(String location1, String location2, TextView textView) {
         SQLiteDatabase db = myDB.getReadableDatabase();
-        String query = "SELECT Code FROM Routes WHERE location IN (?, ?) GROUP BY Code HAVING COUNT(DISTINCT location) = 2";
+        String query = "SELECT J_Code FROM Jeepney WHERE Location IN (?, ?) GROUP BY J_Code HAVING COUNT(DISTINCT location) = 2";
         String[] selectionArgs = { location1, location2 };
         Cursor cursor = db.rawQuery(query, selectionArgs);
         StringBuilder result = new StringBuilder();
         while (cursor.moveToNext()) {
-            String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("code"));
+            String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("J_Code"));
             result.append(jeepneyCode).append("\n");
         }
         cursor.close();
