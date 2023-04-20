@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,14 +15,14 @@ public class SuggestedRoutes extends AppCompatActivity {
 
     DatabaseHelper myDB = new DatabaseHelper(this);
     EditText location, destination;
-    TextView Display;
+    Button Display;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggested_routes);
         location = (EditText) findViewById(R.id.Location);
         destination = (EditText) findViewById(R.id.Destination);
-        Display = (TextView) findViewById(R.id.textView4);
+        Display = (Button) findViewById(R.id.RouteButton);
 
         location.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,7 +69,7 @@ public class SuggestedRoutes extends AppCompatActivity {
     }
 
     //This is where the query happens. Two locations is accepted and outputs suggestions
-    private void executeQuery(String location1, String location2, TextView textView) {
+    private void executeQuery(String location1, String location2, Button button) {
         SQLiteDatabase db = myDB.getReadableDatabase();
         String query = "SELECT J_Code FROM Jeepney WHERE Location IN (?, ?) GROUP BY J_Code HAVING COUNT(DISTINCT location) = 2";
         String[] selectionArgs = { location1, location2 };
@@ -80,7 +81,8 @@ public class SuggestedRoutes extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-        textView.setText(result.toString());
+        String resultRoute = result.toString();
+        button.setText(resultRoute);
     }
 
     public void displayTables() {
