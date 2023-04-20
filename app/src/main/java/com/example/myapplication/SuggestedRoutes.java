@@ -71,13 +71,14 @@ public class SuggestedRoutes extends AppCompatActivity {
     //This is where the query happens. Two locations is accepted and outputs suggestions
     private void executeQuery(String location1, String location2, Button button) {
         SQLiteDatabase db = myDB.getReadableDatabase();
-        String query = "SELECT J_Code FROM Jeepney WHERE Location IN (?, ?) GROUP BY J_Code HAVING COUNT(DISTINCT location) = 2";
+        String query = "SELECT CODE FROM Jeepney WHERE Location IN (?, ?) GROUP BY CODE HAVING COUNT(DISTINCT location) = 2";
         String[] selectionArgs = { location1, location2 };
         Cursor cursor = db.rawQuery(query, selectionArgs);
         StringBuilder result = new StringBuilder();
         while (cursor.moveToNext()) {
-            String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("J_Code"));
+            String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
             result.append(jeepneyCode).append("\n");
+            //For every result create button.
         }
         cursor.close();
         db.close();
@@ -85,24 +86,6 @@ public class SuggestedRoutes extends AppCompatActivity {
         button.setText(resultRoute);
     }
 
-    public void displayTables() {
-        SQLiteDatabase db = myDB.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'", null);
-
-        //TextView textView = findViewById(R.id.textView);
-
-
-        if (cursor.moveToFirst()) {
-
-            do {
-                String tableName = cursor.getString(0);
-                Display.setText(tableName + "\n");
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-    }
 
 
     public void SuggestRoutes(){

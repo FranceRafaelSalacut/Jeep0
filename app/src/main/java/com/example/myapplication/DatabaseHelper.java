@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Database now works...
     */
 
-    public static final String DB_NAME = "jeep.db";
+    public static final String DB_NAME = "new_jeep.db";
     public static final String DB_PATH = "/data/data/com.example.myapplication/databases/";
 
     private Context mContext;
