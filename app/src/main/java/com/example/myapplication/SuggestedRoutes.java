@@ -86,7 +86,19 @@ public class SuggestedRoutes extends AppCompatActivity {
         button.setText(resultRoute);
     }
 
-
+    // Function that calculates the fare given travel distance, base fare, and increase per km
+    public float calculateFare(float distance, float baseFare, float perKm){
+        // set totalFare to baseFare
+        float totalFare = baseFare;
+        // if travel distance greater than 5 km, increase totalFare
+        if(distance > 5){
+            float excessDistance = distance - 5;
+            totalFare = baseFare + perKm * (int) excessDistance;
+            // type cast excessDistance to int since we don't include decimals in calculation;
+            // if excessDistance is 3.56 for instance, we discard the 0.56
+        }
+        return totalFare;
+    }
 
     public void SuggestRoutes(){
         // Here make the RouteButton display the code, km, and fare

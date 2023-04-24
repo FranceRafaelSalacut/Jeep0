@@ -96,11 +96,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Jeepo" />
 
+    <!-- Suggested Routes -->
+
     <EditText
         android:id="@+id/Fare"
         android:layout_width="60dp"
         android:layout_height="48dp"
-        android:layout_marginStart="268dp"
         android:layout_marginTop="28dp"
         android:autofillHints="none"
         android:background="#C1EAD9"
@@ -110,14 +111,18 @@
         android:text="@string/fare"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintStart_toEndOf="@+id/Km"
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/Code"
         android:layout_width="60dp"
         android:layout_height="48dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="28dp"
         android:autofillHints="none"
         android:background="#C1EAD9"
@@ -127,14 +132,16 @@
         android:text="@string/code"
         android:textAlignment="center"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
+        app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/Km"
         android:layout_width="60dp"
         android:layout_height="48dp"
-        android:layout_marginStart="172dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="28dp"
         android:autofillHints="none"
         android:background="#C1EAD9"
@@ -144,10 +151,9 @@
         android:text="@string/km"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Code"
         app:layout_constraintTop_toBottomOf="@+id/SuggestedRoutes" />
 
-    <!-- Suggested Routes -->
     <EditText
         android:id="@+id/SuggestedRoutes"
         android:layout_width="311dp"
