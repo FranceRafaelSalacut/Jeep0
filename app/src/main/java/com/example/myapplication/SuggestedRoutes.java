@@ -11,10 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class SuggestedRoutes extends AppCompatActivity {
 
     DatabaseHelper myDB = new DatabaseHelper(this);
     EditText location, destination;
+
+    TextView testing;
     Button Display;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         setContentView(R.layout.suggested_routes);
         location = (EditText) findViewById(R.id.Location);
         destination = (EditText) findViewById(R.id.Destination);
+        testing = (TextView) findViewById(R.id.textView);
         Display = (Button) findViewById(R.id.RouteButton);
 
         location.addTextChangedListener(new TextWatcher() {
@@ -77,13 +82,58 @@ public class SuggestedRoutes extends AppCompatActivity {
         StringBuilder result = new StringBuilder();
         while (cursor.moveToNext()) {
             String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
-            result.append(jeepneyCode).append("\n");
+            String dist = calc_distance(jeepneyCode, location1, location2);
+            float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80);
+            String fare = Float.toString(t_fare);
+            result.append(jeepneyCode).append("\t");
+            result.append(dist).append("\t");
+            result.append(fare).append("\n");
             //For every result create button.
         }
         cursor.close();
         db.close();
         String resultRoute = result.toString();
-        button.setText(resultRoute);
+        testing.setText(resultRoute);
+    }
+
+    public String calc_distance(String jeep_code, String location1, String location2){
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        String query = "SELECT * FROM Jeepney WHERE CODE = ?";
+        String[] args = {jeep_code};
+        Cursor cursor = db.rawQuery(query, args);
+        ArrayList<String[]> data = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String[] row = new String[4];
+            row[0] = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
+            row[1] = cursor.getString(cursor.getColumnIndexOrThrow("Route_No"));
+            row[2] = cursor.getString(cursor.getColumnIndexOrThrow("Location"));
+            row[3] = cursor.getString(cursor.getColumnIndexOrThrow("Distance"));
+            data.add(row);
+        }
+        cursor.close();
+
+        //finding the staring location's route_no
+        int start = 0;
+        for(int i = 0; i< data.size(); i++){
+            String[] temp = data.get(i);
+            if(temp[2].equals(location1)){
+                start = Integer.parseInt(temp[1]);
+            }
+        }
+
+        int sum = 0;
+        do{
+            if(start == data.size()){
+                start = 1;
+            }
+            String[] temp = data.get(start++);
+            sum = sum + Integer.parseInt(temp[3]);
+            if(temp[2].equals(location2)){
+                break;
+            }
+        }while(true);
+
+        return Integer.toString(sum);
     }
 
     // Function that calculates the fare given travel distance, base fare, and increase per km
@@ -99,6 +149,8 @@ public class SuggestedRoutes extends AppCompatActivity {
         }
         return totalFare;
     }
+
+
 
     public void SuggestRoutes(){
         // Here make the RouteButton display the code, km, and fare
