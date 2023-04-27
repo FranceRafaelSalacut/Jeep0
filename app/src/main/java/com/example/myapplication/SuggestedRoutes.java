@@ -9,6 +9,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,15 +21,21 @@ public class SuggestedRoutes extends AppCompatActivity {
     EditText location, destination;
 
     TextView testing;
-    Button Display;
+    //Button Display;
+    ScrollView Disp;
+    LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggested_routes);
         location = (EditText) findViewById(R.id.Location);
         destination = (EditText) findViewById(R.id.Destination);
-        testing = (TextView) findViewById(R.id.textView);
-        Display = (Button) findViewById(R.id.RouteButton);
+        Disp = (ScrollView) findViewById(R.id.scrollView2);
+        layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        //testing = (TextView) findViewById(R.id.textView);
+        //Display = (Button) findViewById(R.id.RouteButton);
 
         location.addTextChangedListener(new TextWatcher() {
             @Override
@@ -41,7 +49,7 @@ public class SuggestedRoutes extends AppCompatActivity {
                 //String text2 = destination.getText().toString();
                 //String concatenatedText = text1 + " " + text2;
                 //Display.setText(concatenatedText);
-                executeQuery(location.getText().toString(), destination.getText().toString(), Display);
+                executeQuery(location.getText().toString(), destination.getText().toString());
                 //displayTables();
             }
 
@@ -63,7 +71,7 @@ public class SuggestedRoutes extends AppCompatActivity {
                 //String text2 = charSequence.toString();
                 //String concatenatedText = text1 + " " + text2;
                 //Display.setText(concatenatedText);
-                executeQuery(location.getText().toString(), destination.getText().toString(), Display);
+                executeQuery(location.getText().toString(), destination.getText().toString());
             }
 
             @Override
@@ -74,26 +82,36 @@ public class SuggestedRoutes extends AppCompatActivity {
     }
 
     //This is where the query happens. Two locations is accepted and outputs suggestions
-    private void executeQuery(String location1, String location2, Button button) {
+    private void executeQuery(String location1, String location2) {
         SQLiteDatabase db = myDB.getReadableDatabase();
         String query = "SELECT CODE FROM Jeepney WHERE Location IN (?, ?) GROUP BY CODE HAVING COUNT(DISTINCT location) = 2";
         String[] selectionArgs = { location1, location2 };
         Cursor cursor = db.rawQuery(query, selectionArgs);
-        StringBuilder result = new StringBuilder();
+        //StringBuilder result = new StringBuilder();
+
+        if (Disp.getChildCount() > 0) {
+            Disp.removeAllViews();
+        }
+
         while (cursor.moveToNext()) {
             String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
             String dist = calc_distance(jeepneyCode, location1, location2);
             float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80);
             String fare = Float.toString(t_fare);
-            result.append(jeepneyCode).append("\t");
-            result.append(dist).append("\t");
-            result.append(fare).append("\n");
+
+            Button button = new Button(this);
+            button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+            layout.addView(button);
+            //result.append(jeepneyCode).append("\t");
+            //result.append(dist).append("\t");
+            //result.append(fare).append("\n");
             //For every result create button.
         }
         cursor.close();
         db.close();
-        String resultRoute = result.toString();
-        testing.setText(resultRoute);
+        Disp.addView(layout);
+        //String resultRoute = result.toString();
+        //testing.setText(resultRoute);
     }
 
     public String calc_distance(String jeep_code, String location1, String location2){
