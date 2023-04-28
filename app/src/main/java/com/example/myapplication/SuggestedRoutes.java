@@ -169,8 +169,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         return totalFare;
     }
 
-
-
+    // for now this function also does nothing
     public void SuggestRoutes(){
         // Here make the RouteButton display the code, km, and fare
     }
