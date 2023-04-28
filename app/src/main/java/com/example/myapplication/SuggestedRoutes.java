@@ -94,9 +94,10 @@ public class SuggestedRoutes extends AppCompatActivity {
         }
 
         while (cursor.moveToNext()) {
+            //Outputs for unit testing are jeepneyCode, dist, fare.
             String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
             String dist = calc_distance(jeepneyCode, location1, location2);
-            float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80);
+            float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
             String fare = Float.toString(t_fare);
 
             Button button = new Button(this);
@@ -155,12 +156,12 @@ public class SuggestedRoutes extends AppCompatActivity {
     }
 
     // Function that calculates the fare given travel distance, base fare, and increase per km
-    public float calculateFare(float distance, float baseFare, float perKm){
+    public float calculateFare(float distance, float baseFare, float perKm, float firstKm){
         // set totalFare to baseFare
         float totalFare = baseFare;
         // if travel distance greater than 5 km, increase totalFare
-        if(distance > 5){
-            float excessDistance = distance - 5;
+        if(distance > firstKm){
+            float excessDistance = distance - firstKm;
             totalFare = baseFare + perKm * (int) excessDistance;
             // type cast excessDistance to int since we don't include decimals in calculation;
             // if excessDistance is 3.56 for instance, we discard the 0.56
