@@ -1,3 +1,4 @@
+
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 public class SuggestedRoutes extends AppCompatActivity {
 
     DatabaseHelper myDB = new DatabaseHelper(this);
@@ -19,9 +21,9 @@ public class SuggestedRoutes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggested_routes);
-        location = (EditText) findViewById(R.id.Location);
-        destination = (EditText) findViewById(R.id.Destination);
-        Display = (TextView) findViewById(R.id.textView4);
+        location = (EditText) findViewById(R.id.initialInputText);
+        destination = (EditText) findViewById(R.id.initialDesiredText);
+        Display = (TextView) findViewById(R.id.codeInfo);
 
         location.addTextChangedListener(new TextWatcher() {
             @Override

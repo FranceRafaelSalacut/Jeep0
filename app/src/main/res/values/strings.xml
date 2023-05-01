@@ -10,4 +10,23 @@
     <string name="routes">Routes</string>
     <string name="to_be_shown">To be displayed</string>
     <string name="jeepo">Jeep</string>
+    <string name="enter_initial_location">Enter Initial Location</string>
+    <string name="enter_desired_location">Enter Desired Location</string>
+    <string name="hamburger_icon">hamburgerIcon</string>
+    <string name="back_button">back_button</string>
+    <string name="travel_history">Travel History</string>
+    <string name="code_text">Code</string>
+    <string name="km_text">KM</string>
+    <string name="fare_text">Fare</string>
+    <string name="initial_to_destination">Initial to destination</string>
+    <string name="code_input">Code</string>
+    <string name="km_input">100\n</string>
+    <string name="_15">15</string>
+    <string name="route_date">Route Date</string>
+    <string name="enter_location">Enter Location</string>
+    <string name="enter_destination">Enter Destination</string>
+    <string name="open_map">Open Map</string>
+    <string name="suggested_routes">Suggested Routes</string>
+    <string name="code_text1">Code</string>
+    <string name="pin_instruction">pin instruction</string>
 </resources>
