@@ -10,12 +10,33 @@ public class DBData {
     public ArrayList<Object> routeInit(){
         routeData.add("62B"); routeData.add(1); routeData.add("Pit-os");
         routeData.add("62B"); routeData.add(2); routeData.add("Bacayan");
-        routeData.add("62B"); routeData.add(3); routeData.add("Talamban");
-        routeData.add("62B"); routeData.add(4); routeData.add("Grand Mall");
-        routeData.add("62B"); routeData.add(5); routeData.add("USC Talamban");
-        routeData.add("62B"); routeData.add(6); routeData.add("Country Mall");
-        routeData.add("62B"); routeData.add(7); routeData.add("Ayala Center Cebu");
-        routeData.add("62B"); routeData.add(8); routeData.add("Capitol");
+        routeData.add("62B"); routeData.add(3); routeData.add("Smeag Sparta");
+        routeData.add("62B"); routeData.add(4); routeData.add("Pelish English School");
+        routeData.add("62B"); routeData.add(5); routeData.add("Gaisano Grand Mall");
+        routeData.add("62B"); routeData.add(6); routeData.add("Aicila Suites Hotel");
+        routeData.add("62B"); routeData.add(7); routeData.add("University of San Carlos");
+        routeData.add("62B"); routeData.add(8); routeData.add("Banilad Town Center");
+        routeData.add("62B"); routeData.add(9); routeData.add("Gaisano Country Mall");
+        routeData.add("62B"); routeData.add(10); routeData.add("University of Cebu Banilad Campus");
+        routeData.add("62B"); routeData.add(11); routeData.add("Paradise Village Road");
+        routeData.add("62B"); routeData.add(12); routeData.add("Cebu Country Club");
+        routeData.add("62B"); routeData.add(13); routeData.add("Samantabhadra Institute");
+        routeData.add("62B"); routeData.add(14); routeData.add("San Carlos Seminar Complex");
+        routeData.add("62B"); routeData.add(15); routeData.add("Keppel Tower Business Park");
+        routeData.add("62B"); routeData.add(16); routeData.add("Ayala Center Cebu");
+        routeData.add("62B"); routeData.add(17); routeData.add("Hotel Elizabeth Cebu");
+        routeData.add("62B"); routeData.add(17); routeData.add("Asilo De La Milagrosa");
+        routeData.add("62B"); routeData.add(18); routeData.add("Collegio de la Immaculada Concepcion");
+        routeData.add("62B"); routeData.add(19); routeData.add("Gen Echavez St");
+        routeData.add("62B"); routeData.add(20); routeData.add("Allsons Inn");
+        routeData.add("62B"); routeData.add(21); routeData.add("Sikatuna St");
+        routeData.add("62B"); routeData.add(22); routeData.add("Colon Obelisk");
+        routeData.add("62B"); routeData.add(23); routeData.add("Vicente Gullas St");
+        routeData.add("62B"); routeData.add(24); routeData.add("Dionsio Jakosalem St");
+        routeData.add("62B"); routeData.add(25); routeData.add("Legazpi St");
+        routeData.add("62B"); routeData.add(26); routeData.add("Progreso St");
+        routeData.add("62B"); routeData.add(27); routeData.add("Carbon Public Market");
+
         routeData.add("12L"); routeData.add(1); routeData.add("Labangon");
         routeData.add("12L"); routeData.add(2); routeData.add("CCNSHS");
         routeData.add("12L"); routeData.add(3); routeData.add("Gaisano Tisa");
@@ -25,6 +46,7 @@ public class DBData {
         routeData.add("12L"); routeData.add(7); routeData.add("Ayala Center Cebu");
         routeData.add("12L"); routeData.add(8); routeData.add("Capitol");
         routeData.add("12L"); routeData.add(9); routeData.add("Banawa");
+
         routeData.add("23"); routeData.add(1); routeData.add("Parkmall");
         routeData.add("23"); routeData.add(2); routeData.add("S&R Membership Shopping");
         routeData.add("23"); routeData.add(3); routeData.add("Cebu Doctors University");
@@ -55,6 +77,8 @@ public class DBData {
         routeData.add("23"); routeData.add(28); routeData.add("Cebu Sea World");
         routeData.add("23"); routeData.add(29); routeData.add("Punta Engano Elementary and High School");
         routeData.add("23"); routeData.add(30); routeData.add("Amisa Residences");
+        routeData.add("23"); routeData.add(31); routeData.add("Grand Arcade"); //change direction
+
         routeData.add("23D"); routeData.add(1); routeData.add("Parkmall");
         routeData.add("23D"); routeData.add(2); routeData.add("S&R Membership Shopping");
         routeData.add("23D"); routeData.add(3); routeData.add("Cebu Doctors University");
@@ -73,6 +97,12 @@ public class DBData {
         routeData.add("23D"); routeData.add(16); routeData.add("La Nueva Supermarket");
         routeData.add("23D"); routeData.add(17); routeData.add("Super Metro Gaisano Lapu-Lapu");
         routeData.add("23D"); routeData.add(18); routeData.add("Lapu Lapu City PUJ Terminal");
+        routeData.add("23D"); routeData.add(19); routeData.add("Grand Aracade");
+        routeData.add("23D"); routeData.add(20); routeData.add("Mandaue Coliseum");
+        routeData.add("23D"); routeData.add(21); routeData.add("STI College");
+        routeData.add("23D"); routeData.add(22); routeData.add("Collegio de la Immaculada Concepcion");
+        routeData.add("23D"); routeData.add(23); routeData.add("Hall of Justice");
+
         routeData.add("MI-01A"); routeData.add(1); routeData.add("Ompad St");
         routeData.add("MI-01A"); routeData.add(2); routeData.add("La Nueva Supermarket");
         routeData.add("MI-01A"); routeData.add(3); routeData.add("Lapu Lapu City PUJ Terminal");
@@ -91,6 +121,9 @@ public class DBData {
         routeData.add("MI-01A"); routeData.add(16); routeData.add("Cebu Sea World");
         routeData.add("MI-01A"); routeData.add(17); routeData.add("Punta Engano Elementary and High School");
         routeData.add("MI-01A"); routeData.add(18); routeData.add("Amisa Residences");
+        routeData.add("MI-01A"); routeData.add(19); routeData.add("The Bellavista Hotel");
+        routeData.add("MI-01A"); routeData.add(20); routeData.add("Mantawe Road");
+
         routeData.add("MI-02B"); routeData.add(1); routeData.add("Imperial Palace Waterpark Resort & Spa");
         routeData.add("MI-02B"); routeData.add(2); routeData.add("Mactan Island Aquarium");
         routeData.add("MI-02B"); routeData.add(3); routeData.add("Cebu White Sands");
@@ -112,6 +145,7 @@ public class DBData {
         routeData.add("MI-02B"); routeData.add(19); routeData.add("Collegio de la Immacuada Concepcion");
         routeData.add("MI-02B"); routeData.add(20); routeData.add("Hall of Justice");
         routeData.add("MI-02B"); routeData.add(21); routeData.add("Parkmall");
+
         routeData.add("MI-03A"); routeData.add(1); routeData.add("Cordova");
         routeData.add("MI-03A"); routeData.add(2); routeData.add("Senor San Roque Parish Church");
         routeData.add("MI-03A"); routeData.add(3); routeData.add("Cordova Academy Cooperative School");
@@ -131,6 +165,7 @@ public class DBData {
         routeData.add("MI-03A"); routeData.add(17); routeData.add("Lapu Lapu City Central School");
         routeData.add("MI-03A"); routeData.add(18); routeData.add("Opon Kindergarten and Bursery School");
         routeData.add("MI-03A"); routeData.add(19); routeData.add("Lapu Lapu City Public Market");
+
         routeData.add("MI-03B"); routeData.add(1); routeData.add("Mepz1 2nd Ave Road");
         routeData.add("MI-03B"); routeData.add(2); routeData.add("Savemore");
         routeData.add("MI-03B"); routeData.add(3); routeData.add("Mactan Marina Mall");
@@ -162,6 +197,7 @@ public class DBData {
         routeData.add("MI-03B"); routeData.add(30); routeData.add("Cordova Academy Cooperative School");
         routeData.add("MI-03B"); routeData.add(31); routeData.add("Senor San Roque Parish Church");
         routeData.add("MI-03B"); routeData.add(32); routeData.add("Cordova");
+
         routeData.add("MI-04A"); routeData.add(1); routeData.add("J Centre");
         routeData.add("MI-04A"); routeData.add(2); routeData.add("Savemore");
         routeData.add("MI-04A"); routeData.add(3); routeData.add("STI College");
@@ -172,6 +208,7 @@ public class DBData {
         routeData.add("MI-04A"); routeData.add(8); routeData.add("Crown Regency Suites");
         routeData.add("MI-04A"); routeData.add(9); routeData.add("Pueblo Verde Terminal");
         routeData.add("MI-04A"); routeData.add(10); routeData.add("Tamiya Terminal");
+
         routeData.add("MI-04B"); routeData.add(1); routeData.add("Mepz1 2nd Ave Road");
         routeData.add("MI-04B"); routeData.add(2); routeData.add("Savemore");
         routeData.add("MI-04B"); routeData.add(3); routeData.add("Mactan Marina Mall");
@@ -182,6 +219,9 @@ public class DBData {
         routeData.add("MI-04B"); routeData.add(8); routeData.add("Crown Regency Suites");
         routeData.add("MI-04B"); routeData.add(9); routeData.add("Robinsons Supermarket");
         routeData.add("MI-04B"); routeData.add(10); routeData.add("Tamiya Terminal");
+        routeData.add("MI-04B"); routeData.add(11); routeData.add("Goldberry Suites and Hotel");
+
+
         routeData.add("MI-05A"); routeData.add(1); routeData.add("Mactan Cebu International Airport");
         routeData.add("MI-05A"); routeData.add(2); routeData.add("Timex Philippines Incorporated");
         routeData.add("MI-05A"); routeData.add(3); routeData.add("Gaisano Mactan");
