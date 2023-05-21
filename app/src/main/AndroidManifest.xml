@@ -33,6 +33,18 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Map_view"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

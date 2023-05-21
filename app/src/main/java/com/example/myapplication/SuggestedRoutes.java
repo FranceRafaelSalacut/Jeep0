@@ -2,11 +2,13 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -93,9 +95,8 @@ public class SuggestedRoutes extends AppCompatActivity {
         Cursor cursor = db.rawQuery(query, selectionArgs);
         //StringBuilder result = new StringBuilder();
 
-        if (Disp.getChildCount() > 0) {
-            Disp.removeAllViews();
-        }
+        layout.removeAllViews();
+        Disp.removeAllViews();
 
         while (cursor.moveToNext()) {
             //Outputs for unit testing are jeepneyCode, dist, fare.
@@ -106,6 +107,16 @@ public class SuggestedRoutes extends AppCompatActivity {
 
             Button button = new Button(this);
             button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), Map_view.class);
+                    intent.putExtra("Code", jeepneyCode);
+                    intent.putExtra("Dist", dist);
+                    intent.putExtra("Fare", fare);
+                    startActivity(intent);
+                }
+            });
             layout.addView(button);
             //result.append(jeepneyCode).append("\t");//("\n");
             //result.append(dist).append("\t");
