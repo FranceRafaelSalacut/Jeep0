@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,12 +33,31 @@ public class SuggestedRoutes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggested_routes);
-        location = (EditText) findViewById(R.id.initialInputText);
-        destination = (EditText) findViewById(R.id.initialDesiredText);
+
+        // location and destination fields now have autocomplete features
+        AutoCompleteTextView location = (AutoCompleteTextView) findViewById(R.id.initialInputText);
+        AutoCompleteTextView destination = (AutoCompleteTextView) findViewById(R.id.initialDesiredText);
         Disp = (ScrollView) findViewById(R.id.scrollView2);
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         testing = (TextView) findViewById(R.id.textView3);
+
+        // generate string query of all locations
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT DISTINCT Location FROM Jeepney", null);
+        String[] locations = new String[cursor.getCount()];
+        int i = 0;
+        while(cursor.moveToNext()){
+            String locName = cursor.getString(cursor.getColumnIndexOrThrow("Location"));
+            locations[i] = locName;
+            i++;
+        }
+
+        // use ArrayAdapter for the autocomplete text fields to use the locations string array
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locations);
+        location.setAdapter(adapter);
+        destination.setAdapter(adapter);
 
         //testing = (TextView) findViewById(R.id.textView);
         //Display = (Button) findViewById(R.id.RouteButton);
