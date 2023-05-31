@@ -123,19 +123,22 @@ public class SuggestedRoutes extends AppCompatActivity {
         while (cursor.moveToNext()) {
             //Outputs for unit testing are jeepneyCode, dist, fare.
             String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
-            String dist = calc_distance(jeepneyCode, location1, location2);
-            float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
-            String fare = Float.toString(t_fare);
+            //String dist = calc_distance(jeepneyCode, location1, location2);
+            //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
+            //String fare = Float.toString(t_fare);
 
             Button button = new Button(this);
-            button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+            //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+            button.setText("Jeep Code: " + jeepneyCode);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), Map_view.class);
                     intent.putExtra("Code", jeepneyCode);
-                    intent.putExtra("Dist", dist);
-                    intent.putExtra("Fare", fare);
+                    //intent.putExtra("Dist", dist);
+                    //intent.putExtra("Fare", fare);
+                    intent.putExtra("Location", location1);
+                    intent.putExtra("Destination", location2);
                     startActivity(intent);
                 }
             });
