@@ -71,6 +71,7 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.DirectionsStep;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
 import com.google.android.gms.maps.model.LatLng;
@@ -85,8 +86,9 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 import com.google.maps.model.EncodedPolyline;
 
-
-
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.MapsInitializer.Renderer;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 
 import java.util.Arrays;
@@ -103,13 +105,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
+public class Map_view extends AppCompatActivity implements OnMapReadyCallback, OnMapsSdkInitializedCallback {
 
     Button back;
     Intent recieve;
     TextView test;
     private MapView mapView;
     private GoogleMap googleMap;
+    private String TAG = "so47492459";
     private FusedLocationProviderClient fusedLocationClient;
     LatLng location1;
     LatLng location2;
@@ -122,6 +125,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
+        MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
+
         back = (Button) findViewById(R.id.back_away);
         recieve = getIntent();
         test = (TextView) findViewById(R.id.textView4);
@@ -132,10 +137,6 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
 
-        // Initialize the Places SDK
-        Places.initialize(getApplicationContext(), "AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o");
-        PlacesClient placesClient = Places.createClient(this);
-
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -143,32 +144,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocationCoordinates(start,end);
 
-        test.setText(start + " " + end);
-
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME);
-        FetchPlaceRequest location1Request = FetchPlaceRequest.builder(location1.toString(), placeFields).build();
-        FetchPlaceRequest location2Request = FetchPlaceRequest.builder(location2.toString(), placeFields).build();
-
-        placesClient.fetchPlace(location1Request).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FetchPlaceResponse response = task.getResult();
-                Place place = response.getPlace();
-                String location1Name = place.getName();
-                // Update location1 marker with the fetched name
-                googleMap.addMarker(new MarkerOptions().position(location1).title(location1Name));
-            }
-        });
-
-        placesClient.fetchPlace(location2Request).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FetchPlaceResponse response = task.getResult();
-                Place place = response.getPlace();
-                String location2Name = place.getName();
-                // Update location2 marker with the fetched name
-                googleMap.addMarker(new MarkerOptions().position(location2).title(location2Name));
-            }
-        });
-
+        test.setText(location1.toString() + " " + location2.toString());
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,8 +173,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
+    }/**
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
@@ -243,8 +218,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
                 new com.google.android.gms.maps.model.LatLngBounds(boundsSouthwest, boundsNortheast), 100));
     }
 
-
-
+    **/
 
     /**
     public void onMapReady(@NonNull GoogleMap map) {
@@ -266,7 +240,110 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback {
                     .position(location2)
                     .title(end));
         }
-    }**/
+    }
+     **/
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap map) {
+        googleMap = map;
+
+        // Set the camera position to Cebu City
+        LatLng cebuCity = new LatLng(10.3157, 123.8854);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cebuCity, 12f));
+
+        // Add markers for the locations
+        if (location1 != null) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(location1)
+                    .title(start));
+        }
+
+        if (location2 != null) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(location2)
+                    .title(end));
+        }
+
+        String coordinates1 = location1.latitude + "," + location1.longitude;
+
+        String coordinates2 = location2.latitude + "," + location2.longitude;
+        //Define list to get all latlng for the route
+        List<LatLng> path = new ArrayList();
+
+
+        //Execute Directions API request
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey("AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o")
+                .build();
+        DirectionsApiRequest req = DirectionsApi.getDirections(context, coordinates1, coordinates2);
+        try {
+            DirectionsResult res = req.await();
+
+            //Loop through legs and steps to get encoded polylines of each step
+            if (res.routes != null && res.routes.length > 0) {
+                DirectionsRoute route = res.routes[0];
+
+                if (route.legs !=null) {
+                    for(int i=0; i<route.legs.length; i++) {
+                        DirectionsLeg leg = route.legs[i];
+                        if (leg.steps != null) {
+                            for (int j=0; j<leg.steps.length;j++){
+                                DirectionsStep step = leg.steps[j];
+                                if (step.steps != null && step.steps.length >0) {
+                                    for (int k=0; k<step.steps.length;k++){
+                                        DirectionsStep step1 = step.steps[k];
+                                        EncodedPolyline points1 = step1.polyline;
+                                        if (points1 != null) {
+                                            //Decode polyline and add points to list of route coordinates
+                                            List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
+                                            for (com.google.maps.model.LatLng coord1 : coords1) {
+                                                path.add(new LatLng(coord1.lat, coord1.lng));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    EncodedPolyline points = step.polyline;
+                                    if (points != null) {
+                                        //Decode polyline and add points to list of route coordinates
+                                        List<com.google.maps.model.LatLng> coords = points.decodePath();
+                                        for (com.google.maps.model.LatLng coord : coords) {
+                                            path.add(new LatLng(coord.lat, coord.lng));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch(Exception ex) {
+            //Log.e(TAG, ex.getLocalizedMessage());
+        }
+
+        //Draw the polyline
+        if (path.size() > 0) {
+            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(5);
+            googleMap.addPolyline(opts);
+        }
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zaragoza, 6));
+    }
+
+
+    @Override
+    public void onMapsSdkInitialized(MapsInitializer.Renderer renderer) {
+        switch (renderer) {
+            case LATEST:
+                Log.d("MapsDemo", "The latest version of the renderer is used.");
+                break;
+            case LEGACY:
+                Log.d("MapsDemo", "The legacy version of the renderer is used.");
+                break;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
