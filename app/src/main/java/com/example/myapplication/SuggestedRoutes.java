@@ -118,67 +118,41 @@ public class SuggestedRoutes extends AppCompatActivity {
 
         //StringBuilder result = new StringBuilder();
 
-        layout.removeAllViews();
-        Disp.removeAllViews();
-
-        while (cursor.moveToNext()) {
-            //Outputs for unit testing are jeepneyCode, dist, fare.
-            String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
-            //String dist = calc_distance(jeepneyCode, location1, location2);
-            //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
-            //String fare = Float.toString(t_fare);
-
-            Button button = new Button(this);
-            //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
-            button.setText("Jeep Code: " + jeepneyCode);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), Map_view.class);
-                    intent.putExtra("Code", jeepneyCode);
-                    //intent.putExtra("Dist", dist);
-                    //intent.putExtra("Fare", fare);
-                    intent.putExtra("Location", location1);
-                    intent.putExtra("Destination", location2);
-                    startActivity(intent);
-                }
-            });
-            layout.addView(button);
-            //result.append(jeepneyCode).append("\t");//("\n");
-            //result.append(dist).append("\t");
-            //result.append(fare).append("\n");
-            //For every result create button.
-        }
-
+        // if nothing pops up from first query, do this instead
         if (cursor.getCount() == 0){
-            query = "SELECT * FROM (SELECT CODE AS Code1 FROM Jeepney WHERE Location = ?)" +
-                    "LEFT JOIN (SELECT CODE AS Code2 FROM Jeepney WHERE Location = ?)";
-            cursor = db.rawQuery(query, selectionArgs);
+            executeQuery_v2(location1, location2);
+        }
+        else {
+            layout.removeAllViews();
+            Disp.removeAllViews();
 
             while (cursor.moveToNext()) {
                 //Outputs for unit testing are jeepneyCode, dist, fare.
-                String code1 = cursor.getString(cursor.getColumnIndexOrThrow("Code1"));
-                String code2 = cursor.getString(cursor.getColumnIndexOrThrow("Code2"));
+                String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
                 //String dist = calc_distance(jeepneyCode, location1, location2);
                 //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
                 //String fare = Float.toString(t_fare);
 
                 Button button = new Button(this);
                 //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
-                button.setText(code1 + " -> " + code2);
+                button.setText("Jeep Code: " + jeepneyCode);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), Map_view.class);
-//                        intent.putExtra("Code", jeepneyCode);
-//                        //intent.putExtra("Dist", dist);
-//                        //intent.putExtra("Fare", fare);
-//                        intent.putExtra("Location", location1);
-//                        intent.putExtra("Destination", location2);
+                        intent.putExtra("Code", jeepneyCode);
+                        //intent.putExtra("Dist", dist);
+                        //intent.putExtra("Fare", fare);
+                        intent.putExtra("Location", location1);
+                        intent.putExtra("Destination", location2);
                         startActivity(intent);
                     }
                 });
                 layout.addView(button);
+                //result.append(jeepneyCode).append("\t");//("\n");
+                //result.append(dist).append("\t");
+                //result.append(fare).append("\n");
+                //For every result create button.
             }
         }
 
@@ -189,7 +163,103 @@ public class SuggestedRoutes extends AppCompatActivity {
         //testing.setText(resultRoute);
     }
 
-    public String calc_distance(String jeep_code, String location1, String location2){
+    // use of this function is to determine a midpoint between two locations when there is no direct route
+    private void executeQuery_v2(String location1, String location2) {
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        String[] selectionArgs = { location1, location2 };
+        String query = "SELECT Loc1 AS Midpoint FROM (SELECT DISTINCT Location AS Loc1 FROM Jeepney" +
+                " WHERE CODE IN (SELECT CODE FROM Jeepney WHERE Location = ?)) " +
+                "INNER JOIN (SELECT DISTINCT Location AS Loc2 FROM Jeepney WHERE CODE IN " +
+                "(SELECT CODE FROM Jeepney WHERE Location = ?)) ON Loc1 = Loc2";
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        layout.removeAllViews();
+        Disp.removeAllViews();
+
+        while (cursor.moveToNext()) {
+            String midpoint = cursor.getString(cursor.getColumnIndexOrThrow("Midpoint"));
+
+            Button button = new Button(this);
+            button.setText("Midpoint: " + midpoint);
+//            TextView text1 = new TextView(this);
+//            TextView text2 = new TextView(this);
+//            text1.setText("From start to midpoint " + midpoint);
+//            executeQuery(location1, midpoint);
+//            text2.setText("From midpoint " + midpoint + " to destination");
+//            executeQuery(midpoint, location2);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    executeQuery_midpoint(location1, location2);
+                }
+            });
+//
+            layout.addView(button);
+//            layout.addView(text2);
+        }
+//        cursor.close();
+//        db.close();
+//        Disp.addView(layout);
+    }
+
+    // this just combines routes crossing through the midpoint, though this is temporary.
+    // point is to suggest routes the user can take from start to finish, as long as there is a midpoint.
+    private void executeQuery_midpoint(String location1, String location2) {
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        String query = "SELECT CODE FROM Jeepney WHERE Location = ? UNION " +
+                "SELECT CODE FROM Jeepney WHERE Location = ?";
+        String[] selectionArgs = { location1, location2 };
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        //StringBuilder result = new StringBuilder();
+
+        // if nothing pops up from first query, do this instead
+        if (cursor.getCount() == 0){
+            executeQuery_v2(location1, location2);
+        }
+        else {
+            layout.removeAllViews();
+            Disp.removeAllViews();
+
+            while (cursor.moveToNext()) {
+                //Outputs for unit testing are jeepneyCode, dist, fare.
+                String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
+                //String dist = calc_distance(jeepneyCode, location1, location2);
+                //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
+                //String fare = Float.toString(t_fare);
+
+                Button button = new Button(this);
+                //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+                button.setText("Jeep Code: " + jeepneyCode);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Map_view.class);
+                        intent.putExtra("Code", jeepneyCode);
+                        //intent.putExtra("Dist", dist);
+                        //intent.putExtra("Fare", fare);
+                        intent.putExtra("Location", location1);
+                        intent.putExtra("Destination", location2);
+                        startActivity(intent);
+                    }
+                });
+                layout.addView(button);
+                //result.append(jeepneyCode).append("\t");//("\n");
+                //result.append(dist).append("\t");
+                //result.append(fare).append("\n");
+                //For every result create button.
+            }
+        }
+
+        cursor.close();
+        db.close();
+        Disp.addView(layout);
+        //String resultRoute = result.toString();
+        //testing.setText(resultRoute);
+    }
+
+    public String calc_distance(String jeep_code, String location1, String location2) {
         SQLiteDatabase db = myDB.getReadableDatabase();
         String query = "SELECT * FROM Jeepney WHERE CODE = ?";
         String[] args = {jeep_code};
@@ -230,10 +300,10 @@ public class SuggestedRoutes extends AppCompatActivity {
     }
 
     // Function that calculates the fare given travel distance, base fare, and increase per km
-    public float calculateFare(float distance, float baseFare, float perKm, float firstKm){
+    public float calculateFare(float distance, float baseFare, float perKm, float firstKm) {
         // set totalFare to baseFare
         float totalFare = baseFare;
-        // if travel distance greater than 5 km, increase totalFare
+        // if travel distance greater than firstKm, increase totalFare
         if(distance > firstKm){
             float excessDistance = distance - firstKm;
             totalFare = baseFare + perKm * (int) excessDistance;
