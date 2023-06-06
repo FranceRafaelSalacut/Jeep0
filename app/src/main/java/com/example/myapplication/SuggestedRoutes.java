@@ -115,6 +115,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         String query = "SELECT CODE FROM Jeepney WHERE Location IN (?, ?) GROUP BY CODE HAVING COUNT(DISTINCT location) = 2";
         String[] selectionArgs = { location1, location2 };
         Cursor cursor = db.rawQuery(query, selectionArgs);
+
         //StringBuilder result = new StringBuilder();
 
         layout.removeAllViews();
@@ -148,6 +149,39 @@ public class SuggestedRoutes extends AppCompatActivity {
             //result.append(fare).append("\n");
             //For every result create button.
         }
+
+        if (cursor.getCount() == 0){
+            query = "SELECT * FROM (SELECT CODE AS Code1 FROM Jeepney WHERE Location = ?)" +
+                    "LEFT JOIN (SELECT CODE AS Code2 FROM Jeepney WHERE Location = ?)";
+            cursor = db.rawQuery(query, selectionArgs);
+
+            while (cursor.moveToNext()) {
+                //Outputs for unit testing are jeepneyCode, dist, fare.
+                String code1 = cursor.getString(cursor.getColumnIndexOrThrow("Code1"));
+                String code2 = cursor.getString(cursor.getColumnIndexOrThrow("Code2"));
+                //String dist = calc_distance(jeepneyCode, location1, location2);
+                //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
+                //String fare = Float.toString(t_fare);
+
+                Button button = new Button(this);
+                //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+                button.setText(code1 + " -> " + code2);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Map_view.class);
+//                        intent.putExtra("Code", jeepneyCode);
+//                        //intent.putExtra("Dist", dist);
+//                        //intent.putExtra("Fare", fare);
+//                        intent.putExtra("Location", location1);
+//                        intent.putExtra("Destination", location2);
+                        startActivity(intent);
+                    }
+                });
+                layout.addView(button);
+            }
+        }
+
         cursor.close();
         db.close();
         Disp.addView(layout);
