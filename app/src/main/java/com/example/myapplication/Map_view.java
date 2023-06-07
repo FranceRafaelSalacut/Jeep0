@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -110,6 +111,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     Button back;
     Intent recieve;
     TextView test;
+    DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MapView mapView;
     private GoogleMap googleMap;
     private String TAG = "so47492459";
@@ -117,7 +119,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     LatLng location1;
     LatLng location2;
 
-
+    ArrayList<String> route = new ArrayList<>();
     String start, end, jeepneyCode;
 
     @Override
@@ -137,6 +139,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
 
+        getRoutePath();
+
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -144,7 +148,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocationCoordinates(start,end);
 
-        test.setText(location1.toString() + " " + location2.toString());
+        //test.setText(location1.toString() + " " + location2.toString());
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +158,57 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
             }
         });
 
+    }
+
+    private void getRoutePath(){
+        // Assuming you have a DatabaseHelper class for managing your SQLite database
+
+        // Query and store locations in an array
+        String targetJeepCode = jeepneyCode ;
+        ArrayList<String> locationsArray = new ArrayList<>();
+
+        // Replace 'context' with your activity or application context
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        String[] columns = {"Location"};
+        String selection = "CODE = ?";
+        String[] selectionArgs = {targetJeepCode};
+        String orderBy = "Route_No";
+        String result = "";
+
+        Cursor cursor = database.query("Jeepney", columns, selection, selectionArgs, null, null, orderBy);
+
+        while (cursor.moveToNext()) {
+            String location = cursor.getString(cursor.getColumnIndexOrThrow("Location"));
+            locationsArray.add(location);
+
+        }
+        cursor.close();
+        database.close();
+        boolean add = false;
+        int size = locationsArray.size();
+        int index = 0;
+
+        while(true){
+            if(index == size){
+                index = 0;
+            }
+
+            if(locationsArray.get(index).equals(start)){
+                add = true;
+            }
+
+            if(add){
+                route.add(locationsArray.get(index));
+            }
+
+            if(locationsArray.get(index).equals(end) && add){
+                break;
+            }
+            index+=1;
+        }
+
+        //test.setText(route.toString());
     }
 
     private void getLocationCoordinates(String start, String end) {
@@ -173,7 +228,27 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }/**
+    }
+
+    private LatLng getspecificLocationCoordinates(String location) {
+        Geocoder geocoder = new Geocoder(this);
+        LatLng coordinate = null;
+        try {
+            List<Address> addressList1 = geocoder.getFromLocationName(location + ", Cebu City", 1);
+            if (!addressList1.isEmpty()) {
+                Address address1 = addressList1.get(0);
+                coordinate = new LatLng(address1.getLatitude(), address1.getLongitude());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return coordinate;
+    }
+
+
+
+    /**
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
@@ -264,12 +339,38 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
                     .title(end));
         }
 
-        String coordinates1 = location1.latitude + "," + location1.longitude;
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-        String coordinates2 = location2.latitude + "," + location2.longitude;
+        //DrawPolyLines(location1, location2);
+        int size = route.size();
+        int index1 = 0;
+        int index2 = 1;
+        while(true) {
+            if(index2 == size){
+                break;
+            }
+            LatLng loca1 = getspecificLocationCoordinates(route.get(index1));
+            LatLng loca2 = getspecificLocationCoordinates(route.get(index2));
+            String coordinates1 = loca1.latitude + "," + loca1.longitude;
+            test.setText(coordinates1);
+            DrawPolyLines(loca1, loca2);
+            index1+=1;
+            index2+=1;
+        }
+
+       // test.setText("YES?");
+
+
+        //DrawPolyLines(loca1,loca2);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zaragoza, 6));
+    }
+
+    private void DrawPolyLines(LatLng Loc1, LatLng Loc2){
+
+        String coordinates1 = Loc1.latitude + "," + Loc1.longitude;
+        String coordinates2 = Loc2.latitude + "," + Loc2.longitude;
         //Define list to get all latlng for the route
         List<LatLng> path = new ArrayList();
-
 
         //Execute Directions API request
         GeoApiContext context = new GeoApiContext.Builder()
@@ -322,13 +423,10 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         //Draw the polyline
         if (path.size() > 0) {
-            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(5);
+            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(10);
             googleMap.addPolyline(opts);
         }
 
-        googleMap.getUiSettings().setZoomControlsEnabled(true);
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zaragoza, 6));
     }
 
 
@@ -343,7 +441,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
                 break;
         }
     }
-
+    /**
     @Override
     public void onResume() {
         super.onResume();
@@ -379,4 +477,5 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         super.onLowMemory();
         mapView.onLowMemory();
     }
+    **/
 }
