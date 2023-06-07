@@ -231,21 +231,46 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     }
 
     private LatLng getspecificLocationCoordinates(String location) {
-        Geocoder geocoder = new Geocoder(this);
-        LatLng coordinate = null;
+        /**Geocoder geocoder = new Geocoder(this);
+        LatLng coordinates = null;
         try {
             List<Address> addressList1 = geocoder.getFromLocationName(location + ", Cebu City", 1);
             if (!addressList1.isEmpty()) {
                 Address address1 = addressList1.get(0);
-                coordinate = new LatLng(address1.getLatitude(), address1.getLongitude());
+                coordinates = new LatLng(address1.getLatitude(), address1.getLongitude());
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }**/
+
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        // Define the columns you want to retrieve from the database
+        String[] projection = { "latitude", "longitude" };
+
+        // Define the selection criteria for the query
+        String selection = "location = ?";
+        String[] selectionArgs = { location };
+
+        // Execute the query and retrieve the result as a Cursor
+        Cursor cursor = database.query("Jeepney", projection, selection, selectionArgs, null, null, null);
+
+        LatLng coordinates = null;
+
+        if (cursor.moveToFirst()) {
+            // Retrieve the latitude and longitude values from the cursor
+            double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("latitude"));
+            double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("longitude"));
+
+            // Create a LatLng object with the retrieved coordinates
+            coordinates = new LatLng(latitude, longitude);
         }
 
-        return coordinate;
-    }
+        cursor.close();
+        database.close();
 
+        return coordinates;
+    }
 
 
     /**
@@ -341,6 +366,10 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey("AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o")
+                .build();
+        /**
         //DrawPolyLines(location1, location2);
         int size = route.size();
         int index1 = 0;
@@ -353,19 +382,21 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
             LatLng loca2 = getspecificLocationCoordinates(route.get(index2));
             String coordinates1 = loca1.latitude + "," + loca1.longitude;
             test.setText(coordinates1);
-            DrawPolyLines(loca1, loca2);
+            //DrawPolyLines(loca1, loca2, context);
             index1+=1;
             index2+=1;
         }
-
+        **/
        // test.setText("YES?");
+
+        drawTest();
 
 
         //DrawPolyLines(loca1,loca2);
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zaragoza, 6));
     }
 
-    private void DrawPolyLines(LatLng Loc1, LatLng Loc2){
+    private void DrawPolyLines(LatLng Loc1, LatLng Loc2,GeoApiContext context){
 
         String coordinates1 = Loc1.latitude + "," + Loc1.longitude;
         String coordinates2 = Loc2.latitude + "," + Loc2.longitude;
@@ -373,9 +404,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         List<LatLng> path = new ArrayList();
 
         //Execute Directions API request
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o")
-                .build();
+
         DirectionsApiRequest req = DirectionsApi.getDirections(context, coordinates1, coordinates2);
         try {
             DirectionsResult res = req.await();
@@ -423,7 +452,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         //Draw the polyline
         if (path.size() > 0) {
-            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(10);
+            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(1);
             googleMap.addPolyline(opts);
         }
 
@@ -441,6 +470,17 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
                 break;
         }
     }
+
+    private void drawTest(){
+        List<LatLng> path = new ArrayList();
+
+        PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(10);
+        googleMap.addPolyline(opts);
+
+
+    }
+
+
     /**
     @Override
     public void onResume() {

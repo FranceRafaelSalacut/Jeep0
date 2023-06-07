@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -136,6 +140,8 @@ public class SuggestedRoutes extends AppCompatActivity {
                 Button button = new Button(this);
                 //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
                 button.setText("Jeep Code: " + jeepneyCode);
+
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -162,7 +168,6 @@ public class SuggestedRoutes extends AppCompatActivity {
         //String resultRoute = result.toString();
         //testing.setText(resultRoute);
     }
-
     // use of this function is to determine a midpoint between two locations when there is no direct route
     private void executeQuery_v2(String location1, String location2) {
         SQLiteDatabase db = myDB.getReadableDatabase();
