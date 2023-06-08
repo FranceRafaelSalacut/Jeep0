@@ -149,15 +149,15 @@ public class SuggestedRoutes extends AppCompatActivity {
                 //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
                 //String fare = Float.toString(t_fare);
 
-                //Button button = new Button(this);
+                Button button = new Button(this);
                 //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
-                //button.setText("Jeep Code: " + jeepneyCode);
+                button.setText("Jeep Code: " + jeepneyCode);
 
-                ConstraintLayout test = null;
+                //ConstraintLayout test = null;
 
-                test = creates(test);
+                //test = creates(test);
 
-                test.setOnClickListener(new View.OnClickListener() {
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), Map_view.class);
@@ -169,7 +169,7 @@ public class SuggestedRoutes extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                layout.addView(test);
+                layout.addView(button);
                 //result.append(jeepneyCode).append("\t");//("\n");
                 //result.append(dist).append("\t");
                 //result.append(fare).append("\n");

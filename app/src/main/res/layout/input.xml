@@ -22,64 +22,50 @@
         android:layout_height="49dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="344dp"
-        android:layout_marginBottom="484dp"
         android:contentDescription="@string/hamburger_icon"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126"
         app:srcCompat="@drawable/img" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:layout_marginTop="564dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/mapView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/initialInputButton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginStart="51dp"
-            android:layout_marginEnd="51dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:clickable="true"
             android:contentDescription="@string/enter_initial_location"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/imageView4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.221"
             app:srcCompat="@drawable/initial" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginStart="51dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="51dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             android:contentDescription="@string/enter_desired_location"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/initialInputButton"
-            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/desired" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
