@@ -29,4 +29,8 @@
     <string name="suggested_routes">Suggested Routes</string>
     <string name="code_text1">Code</string>
     <string name="pin_instruction">pin instruction</string>
+    <string name="selected_route">Selected Route</string>
+    <string name="history">History</string>
+    <string name="jeepoy_logo">jeepoy_logo</string>
+    <string name="map_view">map view</string>
 </resources>
