@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -108,9 +109,10 @@ import java.util.ArrayList;
 
 public class Map_view extends AppCompatActivity implements OnMapReadyCallback, OnMapsSdkInitializedCallback {
 
-    Button back;
+    //Button back;
     Intent recieve;
     TextView test;
+    ImageView back;
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MapView mapView;
     private GoogleMap googleMap;
@@ -129,9 +131,9 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
 
-        back = (Button) findViewById(R.id.back_away);
         recieve = getIntent();
-        test = (TextView) findViewById(R.id.textView4);
+        back = (ImageView) findViewById(R.id.back_button);
+        test = (TextView) findViewById(R.id.textView3);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
         String fare = recieve.getStringExtra("Fare");
@@ -231,17 +233,6 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     }
 
     private LatLng getspecificLocationCoordinates(String location) {
-        /**Geocoder geocoder = new Geocoder(this);
-        LatLng coordinates = null;
-        try {
-            List<Address> addressList1 = geocoder.getFromLocationName(location + ", Cebu City", 1);
-            if (!addressList1.isEmpty()) {
-                Address address1 = addressList1.get(0);
-                coordinates = new LatLng(address1.getLatitude(), address1.getLongitude());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }**/
 
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
@@ -273,76 +264,6 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     }
 
 
-    /**
-    @Override
-    public void onMapReady(@NonNull GoogleMap map) {
-        googleMap = map;
-
-        // Draw route between the locations
-        GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey("AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o").build();
-        DirectionsApiRequest directionsApiRequest = DirectionsApi.newRequest(geoApiContext)
-                .origin(new com.google.maps.model.LatLng(location1.latitude, location1.longitude))
-                .destination(new com.google.maps.model.LatLng(location2.latitude, location2.longitude))
-                .mode(TravelMode.DRIVING);
-
-        directionsApiRequest.setCallback(new com.google.maps.PendingResult.Callback<DirectionsResult>() {
-            @Override
-            public void onResult(DirectionsResult result) {
-                if (result.routes != null && result.routes.length > 0) {
-                    DirectionsRoute route = result.routes[0];
-                    DirectionsLeg leg = route.legs[0];
-
-                    // Add polyline for the route
-                    EncodedPolyline encodedPolyline = route.overviewPolyline;
-                    List<LatLng> points = PolyUtil.decode(encodedPolyline.getEncodedPath());
-                    PolylineOptions polylineOptions = new PolylineOptions();
-                    polylineOptions.addAll(points);
-                    polylineOptions.width(8f);
-                    polylineOptions.color(Color.BLUE);
-                    googleMap.addPolyline(polylineOptions);
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable e) {
-                // Handle error
-            }
-        });
-
-        // Set camera position to show both locations
-        LatLng boundsSouthwest = new LatLng(Math.min(location1.latitude, location2.latitude),
-                Math.min(location1.longitude, location2.longitude));
-        LatLng boundsNortheast = new LatLng(Math.max(location1.latitude, location2.latitude),
-                Math.max(location1.longitude, location2.longitude));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-                new com.google.android.gms.maps.model.LatLngBounds(boundsSouthwest, boundsNortheast), 100));
-    }
-
-    **/
-
-    /**
-    public void onMapReady(@NonNull GoogleMap map) {
-        googleMap = map;
-
-        // Set the camera position to Cebu City
-        LatLng cebuCity = new LatLng(10.3157, 123.8854);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cebuCity, 12f));
-
-        // Add markers for the locations
-        if (location1 != null) {
-            googleMap.addMarker(new MarkerOptions()
-                    .position(location1)
-                    .title(start));
-        }
-
-        if (location2 != null) {
-            googleMap.addMarker(new MarkerOptions()
-                    .position(location2)
-                    .title(end));
-        }
-    }
-     **/
-
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
@@ -366,95 +287,11 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyDljg5Fe3T6V3iieR6fCIKQS12M-iTg68o")
-                .build();
-        /**
-        //DrawPolyLines(location1, location2);
-        int size = route.size();
-        int index1 = 0;
-        int index2 = 1;
-        while(true) {
-            if(index2 == size){
-                break;
-            }
-            LatLng loca1 = getspecificLocationCoordinates(route.get(index1));
-            LatLng loca2 = getspecificLocationCoordinates(route.get(index2));
-            String coordinates1 = loca1.latitude + "," + loca1.longitude;
-            test.setText(coordinates1);
-            //DrawPolyLines(loca1, loca2, context);
-            index1+=1;
-            index2+=1;
-        }
-        **/
+
+
        // test.setText("YES?");
 
         drawTest();
-
-
-        //DrawPolyLines(loca1,loca2);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zaragoza, 6));
-    }
-
-    private void DrawPolyLines(LatLng Loc1, LatLng Loc2,GeoApiContext context){
-
-        String coordinates1 = Loc1.latitude + "," + Loc1.longitude;
-        String coordinates2 = Loc2.latitude + "," + Loc2.longitude;
-        //Define list to get all latlng for the route
-        List<LatLng> path = new ArrayList();
-
-        //Execute Directions API request
-
-        DirectionsApiRequest req = DirectionsApi.getDirections(context, coordinates1, coordinates2);
-        try {
-            DirectionsResult res = req.await();
-
-            //Loop through legs and steps to get encoded polylines of each step
-            if (res.routes != null && res.routes.length > 0) {
-                DirectionsRoute route = res.routes[0];
-
-                if (route.legs !=null) {
-                    for(int i=0; i<route.legs.length; i++) {
-                        DirectionsLeg leg = route.legs[i];
-                        if (leg.steps != null) {
-                            for (int j=0; j<leg.steps.length;j++){
-                                DirectionsStep step = leg.steps[j];
-                                if (step.steps != null && step.steps.length >0) {
-                                    for (int k=0; k<step.steps.length;k++){
-                                        DirectionsStep step1 = step.steps[k];
-                                        EncodedPolyline points1 = step1.polyline;
-                                        if (points1 != null) {
-                                            //Decode polyline and add points to list of route coordinates
-                                            List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-                                            for (com.google.maps.model.LatLng coord1 : coords1) {
-                                                path.add(new LatLng(coord1.lat, coord1.lng));
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    EncodedPolyline points = step.polyline;
-                                    if (points != null) {
-                                        //Decode polyline and add points to list of route coordinates
-                                        List<com.google.maps.model.LatLng> coords = points.decodePath();
-                                        for (com.google.maps.model.LatLng coord : coords) {
-                                            path.add(new LatLng(coord.lat, coord.lng));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } catch(Exception ex) {
-            //Log.e(TAG, ex.getLocalizedMessage());
-        }
-
-        //Draw the polyline
-        if (path.size() > 0) {
-            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(1);
-            googleMap.addPolyline(opts);
-        }
 
     }
 
@@ -473,15 +310,101 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
     private void drawTest(){
         List<LatLng> path = new ArrayList();
+        getRoute(path);
 
-        PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(10);
+        int startLatlng = findClosestCoordinateIndex(location1, path);
+        int endLatlng = findClosestCoordinateIndex(location2, path);
+
+        test.setText(startLatlng + "\n" + endLatlng);
+
+        boolean add = false;
+        int size = path.size();
+        int index = startLatlng;
+        List<LatLng> route = new ArrayList();
+
+        while(true){
+            if(index == size){
+                index = 0;
+            }
+
+            route.add(path.get(index));
+
+            if(index == endLatlng){
+                break;
+            }
+            index+=1;
+        }
+
+
+        PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.BLUE).width(10);
         googleMap.addPolyline(opts);
-
-
     }
 
 
-    /**
+    private List<LatLng> getRoute(List<LatLng> path){
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        // Define the columns you want to retrieve from the database
+        String[] projection = { "Longitude", "Latitude" };
+
+        // Define the selection criteria for the query
+        String selection = "CODE = ?";
+        String[] selectionArgs = { jeepneyCode };
+
+        // Execute the query and retrieve the result as a Cursor
+        Cursor cursor = database.query("RoutePaths", projection, selection, selectionArgs, null, null, null);
+
+        // Iterate through the cursor to retrieve the coordinates
+        while (cursor.moveToNext()) {
+            double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("Latitude"));
+            double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("Longitude"));
+            LatLng coordinates = new LatLng(latitude, longitude);
+            path.add(coordinates);
+        }
+
+        cursor.close();
+        database.close();
+
+        return path;
+    }
+
+    public static int findClosestCoordinateIndex(LatLng location, List<LatLng> path) {
+        double closestDistance = Double.MAX_VALUE;
+        int closestIndex = -1;
+
+        for (int i = 0; i < path.size(); i++) {
+            LatLng coordinate = path.get(i);
+            double distance = calculateDistance(location, coordinate);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return closestIndex;
+    }
+
+    public static double calculateDistance(LatLng location1, LatLng location2) {
+        double earthRadius = 6371;  // Radius of the Earth in kilometers
+
+        double lat1 = Math.toRadians(location1.latitude);
+        double lon1 = Math.toRadians(location1.longitude);
+        double lat2 = Math.toRadians(location2.latitude);
+        double lon2 = Math.toRadians(location2.longitude);
+
+        double dLat = lat2 - lat1;
+        double dLon = lon2 - lon1;
+
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(dLon/2) * Math.sin(dLon/2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        double distance = earthRadius * c;
+
+        return distance;
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -517,5 +440,4 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         super.onLowMemory();
         mapView.onLowMemory();
     }
-    **/
 }

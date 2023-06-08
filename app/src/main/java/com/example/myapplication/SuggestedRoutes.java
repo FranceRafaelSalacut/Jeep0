@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -29,6 +34,7 @@ public class SuggestedRoutes extends AppCompatActivity {
     DatabaseHelper myDB = new DatabaseHelper(this);
     EditText location, destination;
 
+    ConstraintLayout testss;
     TextView testing;
     //Button Display;
     ScrollView Disp;
@@ -41,10 +47,16 @@ public class SuggestedRoutes extends AppCompatActivity {
         // location and destination fields now have autocomplete features
         AutoCompleteTextView location = (AutoCompleteTextView) findViewById(R.id.initialInputText);
         AutoCompleteTextView destination = (AutoCompleteTextView) findViewById(R.id.initialDesiredText);
-        Disp = (ScrollView) findViewById(R.id.scrollView2);
+        Disp = (ScrollView) findViewById(R.id.scrollView4);
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        testing = (TextView) findViewById(R.id.textView3);
+        testss = creates(testss);
+        layout.removeAllViews();
+        Disp.removeAllViews();
+        layout.addView(testss);
+        Disp.addView(layout);
+
+        //testing = (TextView) findViewById(R.id.textView3);
 
         // generate string query of all locations
         SQLiteDatabase db = myDB.getReadableDatabase();
@@ -137,12 +149,15 @@ public class SuggestedRoutes extends AppCompatActivity {
                 //float t_fare = calculateFare((float) Integer.parseInt(dist), (float) 12.00, (float) 1.80, (float) 4);
                 //String fare = Float.toString(t_fare);
 
-                Button button = new Button(this);
+                //Button button = new Button(this);
                 //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
-                button.setText("Jeep Code: " + jeepneyCode);
+                //button.setText("Jeep Code: " + jeepneyCode);
 
+                ConstraintLayout test = null;
 
-                button.setOnClickListener(new View.OnClickListener() {
+                test = creates(test);
+
+                test.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), Map_view.class);
@@ -154,7 +169,7 @@ public class SuggestedRoutes extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                layout.addView(button);
+                layout.addView(test);
                 //result.append(jeepneyCode).append("\t");//("\n");
                 //result.append(dist).append("\t");
                 //result.append(fare).append("\n");
@@ -263,45 +278,118 @@ public class SuggestedRoutes extends AppCompatActivity {
         //String resultRoute = result.toString();
         //testing.setText(resultRoute);
     }
+    // Create a new ConstraintLayout
+    private ConstraintLayout creates(ConstraintLayout test){
+        ConstraintLayout constraintLayout = new ConstraintLayout(this);
+            constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        200));
+            constraintLayout.setBackgroundColor(Color.WHITE);
+            constraintLayout.setId(R.id.constraintLayout3);
 
-    public String calc_distance(String jeep_code, String location1, String location2) {
-        SQLiteDatabase db = myDB.getReadableDatabase();
-        String query = "SELECT * FROM Jeepney WHERE CODE = ?";
-        String[] args = {jeep_code};
-        Cursor cursor = db.rawQuery(query, args);
-        ArrayList<String[]> data = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String[] row = new String[4];
-            row[0] = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
-            row[1] = cursor.getString(cursor.getColumnIndexOrThrow("Route_No"));
-            row[2] = cursor.getString(cursor.getColumnIndexOrThrow("Location"));
-            row[3] = cursor.getString(cursor.getColumnIndexOrThrow("Distance"));
-            data.add(row);
-        }
-        cursor.close();
+        // Create a ShapeDrawable for the border
+        ShapeDrawable shapeDrawable = new ShapeDrawable();
+        shapeDrawable.getPaint().setColor(Color.RED);  // Set the border color
+        shapeDrawable.getPaint().setStyle(Paint.Style.STROKE);  // Set the border style
+        shapeDrawable.getPaint().setStrokeWidth(10);  // Set the border width
 
-        //finding the staring location's route_no
-        int start = 0;
-        for(int i = 0; i< data.size(); i++){
-            String[] temp = data.get(i);
-            if(temp[2].equals(location1)){
-                start = Integer.parseInt(temp[1]);
-            }
-        }
+        // Convert the ShapeDrawable to a Drawable
+        Drawable borderDrawable = shapeDrawable;
 
-        int sum = 0;
-        do{
-            if(start == data.size()){
-                start = 1;
-            }
-            String[] temp = data.get(start++);
-            sum = sum + Integer.parseInt(temp[3]);
-            if(temp[2].equals(location2)){
-                break;
-            }
-        }while(true);
+        // Set the border Drawable as the background of the ConstraintLayout
+        constraintLayout.setBackground(borderDrawable);
 
-        return Integer.toString(sum);
+        // Create TextViews
+        TextView codeTextView = createTextView("CODE");
+        TextView kmTextView = createTextView("KM");
+        TextView fareTextView = createTextView("FARE");
+        TextView codeInfoTextView = createTextView("CODE INPUT");
+        TextView kmInfoTextView = createTextView("KM INPUT");
+        TextView fareInfoTextView = createTextView("15");
+
+        // Set IDs for TextViews
+            codeTextView.setId(R.id.code);
+            kmTextView.setId(R.id.km);
+            fareTextView.setId(R.id.fare);
+            codeInfoTextView.setId(R.id.codeInfo);
+            kmInfoTextView.setId(R.id.kmInfo);
+            fareInfoTextView.setId(R.id.fareInfo);
+
+        // Add TextViews to ConstraintLayout
+            constraintLayout.addView(codeTextView);
+            constraintLayout.addView(kmTextView);
+            constraintLayout.addView(fareTextView);
+            constraintLayout.addView(codeInfoTextView);
+            constraintLayout.addView(kmInfoTextView);
+            constraintLayout.addView(fareInfoTextView);
+
+        // Create ConstraintSet to manage constraints
+        ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+
+        // Set constraints for codeTextView
+            constraintSet.connect(codeTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(codeTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(codeTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(codeTextView.getId(), 0.049f);
+            constraintSet.setVerticalBias(codeTextView.getId(), 0.207f);
+
+        // Set constraints for kmTextView
+            constraintSet.connect(kmTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(kmTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(kmTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(kmTextView.getId(), 0.507f);
+            constraintSet.setVerticalBias(kmTextView.getId(), 0.198f);
+
+        // Set constraints for fareTextView
+            constraintSet.connect(fareTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(fareTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(fareTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(fareTextView.getId(), 0.926f);
+            constraintSet.setVerticalBias(fareTextView.getId(), 0.222f);
+
+        // Set constraints for codeInfoTextView
+            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(codeInfoTextView.getId(), 0.055f);
+            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.TOP, codeTextView.getId(), ConstraintSet.BOTTOM);
+            //constraintSet.setVerticalBias(codeInfoTextView.getId(), 0.0f);
+
+        // Set constraints for kmInfoTextView
+            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(kmInfoTextView.getId(), 0.544f);
+            constraintSet.setVerticalBias(kmInfoTextView.getId(), 0.0f);
+
+        // Set constraints for fareInfoTextView
+            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.setHorizontalBias(fareInfoTextView.getId(), 0.916f);
+            constraintSet.setVerticalBias(fareInfoTextView.getId(), 0.0f);
+
+        // Apply constraints to the ConstraintLayout
+            constraintSet.applyTo(constraintLayout);
+
+        // Set the dynamically created ConstraintLayout as the content view
+        //setContentView(constraintLayout);
+
+        test = constraintLayout;
+        return test;
+    }
+
+    private TextView createTextView(String text) {
+        TextView textView = new TextView(this);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView.setText(text);
+        textView.setTextColor(Color.BLACK);
+        textView.setTextSize(16);
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        return textView;
     }
 
     // Function that calculates the fare given travel distance, base fare, and increase per km
