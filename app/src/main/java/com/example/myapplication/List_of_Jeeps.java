@@ -3,6 +3,9 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,7 +57,18 @@ public class List_of_Jeeps extends AppCompatActivity {
             String loca = cursor.getString(cursor.getColumnIndexOrThrow("Locations"));
 
             Button button = new Button(this);
-            //button.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+
+            // Set padding (left, top, right, bottom)
+
+
+// Create a ShapeDrawable for the border
+            ShapeDrawable shapeDrawable = new ShapeDrawable();
+            shapeDrawable.getPaint().setColor(Color.BLACK);
+            shapeDrawable.getPaint().setStyle(Paint.Style.STROKE);
+            shapeDrawable.getPaint().setStrokeWidth(2);
+            button.setBackground(shapeDrawable);
+            //button.setBackgroundColor(Color.RED);
+            //button.setPadding(0, 0, 0, 20);
             button.setText(jeepneyCode + " - " + loca);
 
             //ConstraintLayout test = null;
@@ -64,7 +78,9 @@ public class List_of_Jeeps extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(getApplicationContext(), Route_view.class);
+                    intent.putExtra("Code", jeepneyCode);
+                    startActivity(intent);
                 }
             });
             layout.addView(button);
