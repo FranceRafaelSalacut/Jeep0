@@ -7,23 +7,23 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class input extends AppCompatActivity {
+public class Menu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.input);
+        setContentView(R.layout.menu);
 
-        ImageView imageView = findViewById(R.id.hamburgerButton);
+        ImageView imageView = findViewById(R.id.suggestedRoute);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HamburgerClick.class);
+                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
                 startActivity(intent);
             }
         });
 
-        ImageView imageView2 = findViewById(R.id.initialInputButton);
+        ImageView imageView2 = findViewById(R.id.fare_calc);
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,8 +32,17 @@ public class input extends AppCompatActivity {
             }
         });
 
-        ImageView imageView3 = findViewById(R.id.imageView4);
+        ImageView imageView3 = findViewById(R.id.travel_hist);
         imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView imageView4 = findViewById(R.id.jeepneyList);
+        imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);

@@ -133,7 +133,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         recieve = getIntent();
         back = (ImageView) findViewById(R.id.back_button);
-        test = (TextView) findViewById(R.id.textView3);
+        //test = (TextView) findViewById(R.id.textView3);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
         String fare = recieve.getStringExtra("Fare");

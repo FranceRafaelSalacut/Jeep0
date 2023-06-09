@@ -33,4 +33,8 @@
     <string name="history">History</string>
     <string name="jeepoy_logo">jeepoy_logo</string>
     <string name="map_view">map view</string>
+    <string name="start_travel">start_travel</string>
+    <string name="fare_calculator">fare_calculator</string>
+    <string name="jeepney_list">jeepney_list</string>
+    <string name="jeepo_background">jeepo_background</string>
 </resources>
