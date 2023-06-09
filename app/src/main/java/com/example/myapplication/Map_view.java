@@ -60,6 +60,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -70,6 +72,7 @@ import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
+import com.google.maps.android.SphericalUtil;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
@@ -111,7 +114,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
     //Button back;
     Intent recieve;
-    TextView test;
+    TextView code, distance, fare;
     ImageView back;
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MapView mapView;
@@ -127,12 +130,12 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
+        setContentView(R.layout.selected_route);
 
         MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
 
         recieve = getIntent();
-        back = (ImageView) findViewById(R.id.back_button);
+        back = (ImageView) findViewById(R.id.back_button2);
         //test = (TextView) findViewById(R.id.textView3);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
@@ -141,9 +144,12 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
 
+        code = (TextView) findViewById(R.id.codeInfo2);
+        code.setText(jeepneyCode);
+
         getRoutePath();
 
-        mapView = findViewById(R.id.mapView);
+        mapView = findViewById(R.id.mapView3);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
@@ -315,7 +321,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         int startLatlng = findClosestCoordinateIndex(location1, path);
         int endLatlng = findClosestCoordinateIndex(location2, path);
 
-        test.setText(startLatlng + "\n" + endLatlng);
+        //test.setText(startLatlng + "\n" + endLatlng);
 
         boolean add = false;
         int size = path.size();
@@ -335,9 +341,60 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
             index+=1;
         }
 
+        for (int i = 0; i < route.size(); i++) {
+            putMarker(route.get(i));
+        }
 
         PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.BLUE).width(10);
         googleMap.addPolyline(opts);
+
+        /**
+        double totalDistance = 0.0;
+        int i = 0;
+        while(true) {
+            if(i+1 == path.size()){
+                break;
+            }
+            LatLng point1 = path.get(i);
+            LatLng point2 = path.get(i + 1);
+
+            double distance = SphericalUtil.computeDistanceBetween(point1, point2);
+            totalDistance += distance;
+
+            i++;
+        }
+
+        distance = findViewById(R.id.codeInfo3);
+        distance.setText(String.format("%.2f", totalDistance/1000));
+
+        double fared = calculateFare((float) totalDistance/1000, (float) 12.00, (float) 1.80, (float) 4);
+
+        fare = findViewById(R.id.fareInfo3);
+        fare.setText(String.format("%.2f", fared));
+         **/
+
+
+    }
+
+    private void putMarker(LatLng mark){
+        if (mark != null) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(mark)
+                    .title(mark.toString()));
+        }
+    }
+
+    public float calculateFare(float distance, float baseFare, float perKm, float firstKm) {
+        // set totalFare to baseFare
+        float totalFare = baseFare;
+        // if travel distance greater than firstKm, increase totalFare
+        if(distance > firstKm){
+            float excessDistance = distance - firstKm;
+            totalFare = baseFare + perKm * (int) excessDistance;
+            // type cast excessDistance to int since we don't include decimals in calculation;
+            // if excessDistance is 3.56 for instance, we discard the 0.56
+        }
+        return totalFare;
     }
 
 

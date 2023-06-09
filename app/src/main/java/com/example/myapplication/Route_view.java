@@ -121,26 +121,27 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
     LatLng location1;
     LatLng location2;
 
+
     ArrayList<String> route = new ArrayList<>();
     String start, end, jeepneyCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
+        setContentView(R.layout.selected_route);
 
         MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
 
         recieve = getIntent();
-        back = (ImageView) findViewById(R.id.back_button);
-        test = (TextView) findViewById(R.id.textView3);
+        back = (ImageView) findViewById(R.id.back_button2);
+        //test = (TextView) findViewById(R.id.textView3);
+
         jeepneyCode = recieve.getStringExtra("Code");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);;
 
-        mapView = findViewById(R.id.mapView);
+        mapView = findViewById(R.id.mapView3);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
 
         //test.setText(location1.toString() + " " + location2.toString());
 
@@ -183,13 +184,26 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
     private void drawTest(){
         List<LatLng> path = new ArrayList();
         getRoute(path);
+        ;
+        for (int i = 0; i < path.size(); i++) {
+            //putMarker(path.get(i));
+        }
+
 
         PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(10);
         googleMap.addPolyline(opts);
     }
 
+    private void putMarker(LatLng mark){
+        if (mark != null) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(mark)
+                    .title(mark.toString()));
+        }
+    }
 
     private List<LatLng> getRoute(List<LatLng> path){
+
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
         // Define the columns you want to retrieve from the database
@@ -202,12 +216,14 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
         // Execute the query and retrieve the result as a Cursor
         Cursor cursor = database.query("RoutePaths", projection, selection, selectionArgs, null, null, null);
 
+        List<String> testes = new ArrayList<>();
         // Iterate through the cursor to retrieve the coordinates
         while (cursor.moveToNext()) {
             double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("Latitude"));
             double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("Longitude"));
             LatLng coordinates = new LatLng(latitude, longitude);
             path.add(coordinates);
+
         }
 
         cursor.close();
@@ -216,43 +232,6 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
         return path;
     }
 
-    public static int findClosestCoordinateIndex(LatLng location, List<LatLng> path) {
-        double closestDistance = Double.MAX_VALUE;
-        int closestIndex = -1;
-
-        for (int i = 0; i < path.size(); i++) {
-            LatLng coordinate = path.get(i);
-            double distance = calculateDistance(location, coordinate);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = i;
-            }
-        }
-
-        return closestIndex;
-    }
-
-    public static double calculateDistance(LatLng location1, LatLng location2) {
-        double earthRadius = 6371;  // Radius of the Earth in kilometers
-
-        double lat1 = Math.toRadians(location1.latitude);
-        double lon1 = Math.toRadians(location1.longitude);
-        double lat2 = Math.toRadians(location2.latitude);
-        double lon2 = Math.toRadians(location2.longitude);
-
-        double dLat = lat2 - lat1;
-        double dLon = lon2 - lon1;
-
-        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1) * Math.cos(lat2) *
-                        Math.sin(dLon/2) * Math.sin(dLon/2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-        double distance = earthRadius * c;
-
-        return distance;
-    }
     @Override
     public void onResume() {
         super.onResume();

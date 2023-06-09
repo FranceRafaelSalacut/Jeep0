@@ -50,11 +50,6 @@ public class SuggestedRoutes extends AppCompatActivity {
         Disp = (ScrollView) findViewById(R.id.scrollView4);
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        testss = creates(testss);
-        layout.removeAllViews();
-        Disp.removeAllViews();
-        layout.addView(testss);
-        Disp.addView(layout);
 
         //testing = (TextView) findViewById(R.id.textView3);
 
@@ -277,119 +272,6 @@ public class SuggestedRoutes extends AppCompatActivity {
         Disp.addView(layout);
         //String resultRoute = result.toString();
         //testing.setText(resultRoute);
-    }
-    // Create a new ConstraintLayout
-    private ConstraintLayout creates(ConstraintLayout test){
-        ConstraintLayout constraintLayout = new ConstraintLayout(this);
-            constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        200));
-            constraintLayout.setBackgroundColor(Color.WHITE);
-            constraintLayout.setId(R.id.constraintLayout3);
-
-        // Create a ShapeDrawable for the border
-        ShapeDrawable shapeDrawable = new ShapeDrawable();
-        shapeDrawable.getPaint().setColor(Color.RED);  // Set the border color
-        shapeDrawable.getPaint().setStyle(Paint.Style.STROKE);  // Set the border style
-        shapeDrawable.getPaint().setStrokeWidth(10);  // Set the border width
-
-        // Convert the ShapeDrawable to a Drawable
-        Drawable borderDrawable = shapeDrawable;
-
-        // Set the border Drawable as the background of the ConstraintLayout
-        constraintLayout.setBackground(borderDrawable);
-
-        // Create TextViews
-        TextView codeTextView = createTextView("CODE");
-        TextView kmTextView = createTextView("KM");
-        TextView fareTextView = createTextView("FARE");
-        TextView codeInfoTextView = createTextView("CODE INPUT");
-        TextView kmInfoTextView = createTextView("KM INPUT");
-        TextView fareInfoTextView = createTextView("15");
-
-        // Set IDs for TextViews
-            codeTextView.setId(R.id.code);
-            kmTextView.setId(R.id.km);
-            fareTextView.setId(R.id.fare);
-            codeInfoTextView.setId(R.id.codeInfo);
-            kmInfoTextView.setId(R.id.kmInfo);
-            fareInfoTextView.setId(R.id.fareInfo);
-
-        // Add TextViews to ConstraintLayout
-            constraintLayout.addView(codeTextView);
-            constraintLayout.addView(kmTextView);
-            constraintLayout.addView(fareTextView);
-            constraintLayout.addView(codeInfoTextView);
-            constraintLayout.addView(kmInfoTextView);
-            constraintLayout.addView(fareInfoTextView);
-
-        // Create ConstraintSet to manage constraints
-        ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
-
-        // Set constraints for codeTextView
-            constraintSet.connect(codeTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(codeTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(codeTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(codeTextView.getId(), 0.049f);
-            constraintSet.setVerticalBias(codeTextView.getId(), 0.207f);
-
-        // Set constraints for kmTextView
-            constraintSet.connect(kmTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(kmTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(kmTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(kmTextView.getId(), 0.507f);
-            constraintSet.setVerticalBias(kmTextView.getId(), 0.198f);
-
-        // Set constraints for fareTextView
-            constraintSet.connect(fareTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(fareTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(fareTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(fareTextView.getId(), 0.926f);
-            constraintSet.setVerticalBias(fareTextView.getId(), 0.222f);
-
-        // Set constraints for codeInfoTextView
-            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(codeInfoTextView.getId(), 0.055f);
-            constraintSet.connect(codeInfoTextView.getId(), ConstraintSet.TOP, codeTextView.getId(), ConstraintSet.BOTTOM);
-            //constraintSet.setVerticalBias(codeInfoTextView.getId(), 0.0f);
-
-        // Set constraints for kmInfoTextView
-            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(kmInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(kmInfoTextView.getId(), 0.544f);
-            constraintSet.setVerticalBias(kmInfoTextView.getId(), 0.0f);
-
-        // Set constraints for fareInfoTextView
-            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(fareInfoTextView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.setHorizontalBias(fareInfoTextView.getId(), 0.916f);
-            constraintSet.setVerticalBias(fareInfoTextView.getId(), 0.0f);
-
-        // Apply constraints to the ConstraintLayout
-            constraintSet.applyTo(constraintLayout);
-
-        // Set the dynamically created ConstraintLayout as the content view
-        //setContentView(constraintLayout);
-
-        test = constraintLayout;
-        return test;
-    }
-
-    private TextView createTextView(String text) {
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        textView.setText(text);
-        textView.setTextColor(Color.BLACK);
-        textView.setTextSize(16);
-        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-        return textView;
     }
 
     // Function that calculates the fare given travel distance, base fare, and increase per km

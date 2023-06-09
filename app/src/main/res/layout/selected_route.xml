@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_new"
-                android:text="@string/code_text"
+                android:text="@string/fare_text"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -165,16 +165,15 @@
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView3"
-            android:layout_width="308dp"
-            android:layout_height="262dp"
-            android:layout_marginTop="36dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:contentDescription="@string/map_view"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.701"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
