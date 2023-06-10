@@ -148,7 +148,7 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
+                Intent intent = new Intent(getApplicationContext(), List_of_Jeeps.class);
                 startActivity(intent);
             }
         });

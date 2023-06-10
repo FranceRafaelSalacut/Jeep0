@@ -1,130 +1,68 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
-import android.os.Build;
+import android.media.Image;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class SuggestedRoutes extends AppCompatActivity {
+public class Suggest_jeeps extends AppCompatActivity {
 
+    ScrollView disp;
     DatabaseHelper myDB = new DatabaseHelper(this);
-    EditText location, destination;
-
-    ConstraintLayout testss;
-    TextView testing, list;
-    //Button Display;
-    ScrollView Disp;
     LinearLayout layout;
-    @Override
+    TextView test, list;
+    ImageView back;
+
+    Intent recieve;
+    String start, end;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.suggested_routes);
+        setContentView(R.layout.listofjeeps);
 
-        // location and destination fields now have autocomplete features
-        AutoCompleteTextView location = (AutoCompleteTextView) findViewById(R.id.initialInputText);
-        AutoCompleteTextView destination = (AutoCompleteTextView) findViewById(R.id.initialDesiredText);
-        Disp = (ScrollView) findViewById(R.id.scrollView4);
+        disp = (ScrollView) findViewById(R.id.disp);
+
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
+        test = (TextView) findViewById(R.id.textView4);
+        back = findViewById(R.id.back_button2);
         list = findViewById(R.id.textView4);
 
-        //testing = (TextView) findViewById(R.id.textView3);
+        recieve = getIntent();
+        start = recieve.getStringExtra("start");
+        end = recieve.getStringExtra("end");
 
-        // generate string query of all locations
-        SQLiteDatabase db = myDB.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT DISTINCT Location FROM Jeepney", null);
-        String[] locations = new String[cursor.getCount()];
-        int i = 0;
-        while(cursor.moveToNext()){
-            String locName = cursor.getString(cursor.getColumnIndexOrThrow("Location"));
-            locations[i] = locName;
-            i++;
-        }
-
-        // use ArrayAdapter for the autocomplete text fields to use the locations string array
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locations);
-        location.setAdapter(adapter);
-        destination.setAdapter(adapter);
-
-        //testing = (TextView) findViewById(R.id.textView);
-        //Display = (Button) findViewById(R.id.RouteButton);
-
-        location.addTextChangedListener(new TextWatcher() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //not used
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //String text1 = charSequence.toString();
-                //String text2 = destination.getText().toString();
-                //String concatenatedText = text1 + " " + text2;
-                //testing.setText(concatenatedText);
-                executeQuery(location.getText().toString(), destination.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //not used
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), input.class);
+                startActivity(intent);
             }
         });
-
-        destination.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //not used
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //String text1 = location.getText().toString();
-                //String text2 = charSequence.toString();
-                //String concatenatedText = text1 + " " + text2;
-                //testing.setText(concatenatedText);
-                executeQuery(location.getText().toString(), destination.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //not used
-            }
-        });
+        executeQuery(start, end);
+        //list.setText(start + " + " + end);
     }
 
-    private void testingattentionplease(String location1, String location2) {
-        testing.setText(location1 +" " + location2);
-    }
-
-    //This is where the query happens. Two locations is accepted and outputs suggestions
     private void executeQuery(String location1, String location2) {
         SQLiteDatabase db = myDB.getReadableDatabase();
         String query = "SELECT CODE FROM Jeepney WHERE Location IN (?, ?) GROUP BY CODE HAVING COUNT(DISTINCT location) = 2";
@@ -134,7 +72,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         //StringBuilder result = new StringBuilder();
 
         layout.removeAllViews();
-        Disp.removeAllViews();
+        disp.removeAllViews();
 
         // if nothing pops up from first query, do this instead
         if (cursor.getCount() == 0){
@@ -142,12 +80,9 @@ public class SuggestedRoutes extends AppCompatActivity {
         }
         else {
             layout.removeAllViews();
-            Disp.removeAllViews();
+            disp.removeAllViews();
 
             while (cursor.moveToNext()) {
-                if(cursor.getCount()>0){
-                    list.setVisibility(View.VISIBLE);
-                }
                 //Outputs for unit testing are jeepneyCode, dist, fare.
                 String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
                 //String dist = calc_distance(jeepneyCode, location1, location2);
@@ -207,7 +142,7 @@ public class SuggestedRoutes extends AppCompatActivity {
 
         cursor.close();
         db.close();
-        Disp.addView(layout);
+        disp.addView(layout);
         //String resultRoute = result.toString();
         //testing.setText(resultRoute);
     }
@@ -222,7 +157,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         Cursor cursor = db.rawQuery(query, selectionArgs);
 
         layout.removeAllViews();
-        Disp.removeAllViews();
+        disp.removeAllViews();
 
         if (cursor.getCount() > 1){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -240,35 +175,50 @@ public class SuggestedRoutes extends AppCompatActivity {
 // Create and show the dialog
             AlertDialog dialog = builder.create();
             dialog.show();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("There are no ROUTES on your inputs. Try placing new inputs!")
+                    .setTitle("Sorry");
 
-        }
-        /**
-        while (cursor.moveToNext()) {
-            String midpoint = cursor.getString(cursor.getColumnIndexOrThrow("Midpoint"));
-
-            Button button = new Button(this);
-            button.setText("Midpoint: " + midpoint);
-//            TextView text1 = new TextView(this);
-//            TextView text2 = new TextView(this);
-//            text1.setText("From start to midpoint " + midpoint);
-//            executeQuery(location1, midpoint);
-//            text2.setText("From midpoint " + midpoint + " to destination");
-//            executeQuery(midpoint, location2);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    executeQuery_midpoint(location1, location2);
+// Add a button to dismiss the dialog
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button, do something
+                    dialog.dismiss();
                 }
             });
-//
-            layout.addView(button);
-//            layout.addView(text2);
+
+// Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
+        /**
+         while (cursor.moveToNext()) {
+         String midpoint = cursor.getString(cursor.getColumnIndexOrThrow("Midpoint"));
+
+         Button button = new Button(this);
+         button.setText("Midpoint: " + midpoint);
+         //            TextView text1 = new TextView(this);
+         //            TextView text2 = new TextView(this);
+         //            text1.setText("From start to midpoint " + midpoint);
+         //            executeQuery(location1, midpoint);
+         //            text2.setText("From midpoint " + midpoint + " to destination");
+         //            executeQuery(midpoint, location2);
+
+         button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+        executeQuery_midpoint(location1, location2);
+        }
+        });
+         //
+         layout.addView(button);
+         //            layout.addView(text2);
+         }
          **/
         cursor.close();
         db.close();
-//        Disp.addView(layout);
+//      Disp.addView(layout);
     }
 
     // this just combines routes crossing through the midpoint, though this is temporary.
@@ -288,7 +238,7 @@ public class SuggestedRoutes extends AppCompatActivity {
         }
         else {
             layout.removeAllViews();
-            Disp.removeAllViews();
+            disp.removeAllViews();
 
             while (cursor.moveToNext()) {
                 //Outputs for unit testing are jeepneyCode, dist, fare.
@@ -322,23 +272,9 @@ public class SuggestedRoutes extends AppCompatActivity {
 
         cursor.close();
         db.close();
-        Disp.addView(layout);
+        disp.addView(layout);
         //String resultRoute = result.toString();
         //testing.setText(resultRoute);
-    }
-
-    // Function that calculates the fare given travel distance, base fare, and increase per km
-    public float calculateFare(float distance, float baseFare, float perKm, float firstKm) {
-        // set totalFare to baseFare
-        float totalFare = baseFare;
-        // if travel distance greater than firstKm, increase totalFare
-        if(distance > firstKm){
-            float excessDistance = distance - firstKm;
-            totalFare = baseFare + perKm * (int) excessDistance;
-            // type cast excessDistance to int since we don't include decimals in calculation;
-            // if excessDistance is 3.56 for instance, we discard the 0.56
-        }
-        return totalFare;
     }
 
 }

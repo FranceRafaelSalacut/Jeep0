@@ -18,7 +18,7 @@ public class Menu extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
+                Intent intent = new Intent(getApplicationContext(), input.class);
                 startActivity(intent);
             }
         });

@@ -114,7 +114,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
     //Button back;
     Intent recieve;
-    TextView code, distance, fare;
+    TextView code, distance, fare, test;
     ImageView back;
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MapView mapView;
@@ -125,7 +125,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     LatLng location2;
 
     ArrayList<String> route = new ArrayList<>();
-    String start, end, jeepneyCode;
+    String start, end, jeepneyCode, from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,17 +136,18 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         recieve = getIntent();
         back = (ImageView) findViewById(R.id.back_button2);
-        //test = (TextView) findViewById(R.id.textView3);
+        test = (TextView) findViewById(R.id.textView3);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
         String fare = recieve.getStringExtra("Fare");
+        from = recieve.getStringExtra("From");
         start = recieve.getStringExtra("Location");
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
 
         code = (TextView) findViewById(R.id.codeInfo2);
         code.setText(jeepneyCode);
-
+        test.setText(from);
         getRoutePath();
 
         mapView = findViewById(R.id.mapView3);
@@ -161,7 +162,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
+                Intent intent = new Intent(getApplicationContext(), Suggest_jeeps.class);
                 startActivity(intent);
             }
         });
@@ -342,21 +343,20 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         }
 
         for (int i = 0; i < route.size(); i++) {
-            putMarker(route.get(i));
+            //putMarker(route.get(i));
         }
 
         PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.BLUE).width(10);
         googleMap.addPolyline(opts);
 
-        /**
         double totalDistance = 0.0;
         int i = 0;
         while(true) {
-            if(i+1 == path.size()){
+            if(i+1 == route.size()){
                 break;
             }
-            LatLng point1 = path.get(i);
-            LatLng point2 = path.get(i + 1);
+            LatLng point1 = route.get(i);
+            LatLng point2 = route.get(i + 1);
 
             double distance = SphericalUtil.computeDistanceBetween(point1, point2);
             totalDistance += distance;
@@ -371,7 +371,6 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         fare = findViewById(R.id.fareInfo3);
         fare.setText(String.format("%.2f", fared));
-         **/
 
 
     }
