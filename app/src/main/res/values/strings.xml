@@ -37,4 +37,6 @@
     <string name="fare_calculator">fare_calculator</string>
     <string name="jeepney_list">jeepney_list</string>
     <string name="jeepo_background">jeepo_background</string>
+    <string name="enter_distance">Enter Distance</string>
+    <string name="calculate_fare">Calculate Fare</string>
 </resources>

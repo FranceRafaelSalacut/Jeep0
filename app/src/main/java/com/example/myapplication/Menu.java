@@ -27,7 +27,7 @@ public class Menu extends AppCompatActivity {
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SuggestedRoutes.class);
+                Intent intent = new Intent(getApplicationContext(), FareCalculator.class);
                 startActivity(intent);
             }
         });

@@ -133,6 +133,18 @@
         </activity>
 
         <activity
+            android:name=".FareCalculator"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".Suggest_jeeps"
             android:windowSoftInputMode="adjustPan|adjustResize"
             android:exported="false"
