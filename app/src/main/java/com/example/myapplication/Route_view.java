@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -138,20 +140,37 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
 
         jeepneyCode = recieve.getStringExtra("Code");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);;
+        try {
+            mapView = findViewById(R.id.mapView3);
+            mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync(this);
 
-        mapView = findViewById(R.id.mapView3);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+            //test.setText(location1.toString() + " " + location2.toString());
 
-        //test.setText(location1.toString() + " " + location2.toString());
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), List_of_Jeeps.class);
+                    startActivity(intent);
+                }
+            });
+        }catch(Exception e){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Having trouble staying connected :(")
+                    .setTitle("Sorry");
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), List_of_Jeeps.class);
-                startActivity(intent);
-            }
-        });
+// Add a button to dismiss the dialog
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button, do something
+                    dialog.dismiss();
+                }
+            });
+
+// Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
 
     }
 

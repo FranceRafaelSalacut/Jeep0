@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -97,6 +100,7 @@ import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -123,9 +127,12 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     private FusedLocationProviderClient fusedLocationClient;
     LatLng location1;
     LatLng location2;
-
+    Button save;
     ArrayList<String> route = new ArrayList<>();
     String start, end, jeepneyCode, from;
+    Double Distance, Fare;
+
+    Boolean isSaved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +144,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         recieve = getIntent();
         back = (ImageView) findViewById(R.id.back_button2);
         test = (TextView) findViewById(R.id.textView3);
+        save = findViewById(R.id.button4);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
         String fare = recieve.getStringExtra("Fare");
@@ -144,6 +152,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         start = recieve.getStringExtra("Location");
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
+        isSaved = checkSAVED();
 
         code = (TextView) findViewById(R.id.codeInfo2);
         code.setText(jeepneyCode);
@@ -162,13 +171,72 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Suggest_jeeps.class);
+                Intent intent = new Intent(getApplicationContext(), input.class);
                 startActivity(intent);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isSaved) {
+                    SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+                    ContentValues values = new ContentValues();
+
+                    values.put("CODE", jeepneyCode);
+                    values.put("START", start);
+                    values.put("END", end);
+
+                    long newRowId = database.insert("HISTORY", null, values);
+
+                    isSaved = true;
+                    database.close();
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Map_view.this);
+                    builder.setMessage("Your Route has been saved in History")
+                            .setTitle("Route already Saved");
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button, do something
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         });
 
     }
 
+    private Boolean checkSAVED(){
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        String[] projection = {"CODE", "START", "END"};
+
+        String selection = "CODE = ? AND START = ? AND END = ?";
+        String[] selectionArgs = {jeepneyCode, start, end};
+
+        Cursor cursor = database.query(
+                "HISTORY",
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        boolean isDataAlreadySaved = cursor.moveToFirst();
+
+        cursor.close();
+        database.close();
+
+        return isDataAlreadySaved;
+    }
     private void getRoutePath(){
         // Assuming you have a DatabaseHelper class for managing your SQLite database
 
@@ -237,6 +305,10 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // turns out many location coordinates in Jeepney table are way off
+        //location1 = getspecificLocationCoordinates(start);
+        //location2 = getspecificLocationCoordinates(end);
     }
 
     private LatLng getspecificLocationCoordinates(String location) {
@@ -364,14 +436,16 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
             i++;
         }
 
+        Distance = totalDistance/1000;
+
         distance = findViewById(R.id.codeInfo3);
         distance.setText(String.format("%.2f", totalDistance/1000));
 
         double fared = calculateFare((float) totalDistance/1000, (float) 12.00, (float) 1.80, (float) 4);
 
+        Fare = fared;
         fare = findViewById(R.id.fareInfo3);
         fare.setText(String.format("%.2f", fared));
-
 
     }
 
