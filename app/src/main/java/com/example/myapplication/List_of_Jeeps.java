@@ -62,7 +62,7 @@ public class List_of_Jeeps extends AppCompatActivity {
 
         SQLiteDatabase database = myDB.getReadableDatabase();
         // Query the database for distinct codes
-        String query = "SELECT * FROM DisplayNames";
+        String query = "SELECT * FROM DisplayNames ORDER BY CODE";
         Cursor cursor = database.rawQuery(query, null);
 
         List<String> show = new ArrayList<>();
