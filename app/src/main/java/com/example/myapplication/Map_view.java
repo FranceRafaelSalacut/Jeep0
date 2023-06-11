@@ -97,6 +97,7 @@ import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -237,6 +238,10 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // turns out many location coordinates in Jeepney table are way off
+        //location1 = getspecificLocationCoordinates(start);
+        //location2 = getspecificLocationCoordinates(end);
     }
 
     private LatLng getspecificLocationCoordinates(String location) {

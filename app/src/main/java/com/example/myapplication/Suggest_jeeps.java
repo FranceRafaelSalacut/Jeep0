@@ -161,7 +161,7 @@ public class Suggest_jeeps extends AppCompatActivity {
 
         if (cursor.getCount() > 1){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("There are no DIRECT ROUTES on your inputs. However we are working on it so stay Tuned!")
+            builder.setMessage("There are no DIRECT ROUTES on your inputs. However we are working on it, so stay tuned!")
                     .setTitle("Sorry");
 
 // Add a button to dismiss the dialog
