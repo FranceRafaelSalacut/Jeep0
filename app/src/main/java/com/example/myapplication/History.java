@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -113,7 +114,7 @@ public class History extends AppCompatActivity {
 
         TextView textView2 = new TextView(this);
         textView2.setId(R.id.km);
-        textView2.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(90), dpToPx(21)));
+        textView2.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(85), dpToPx(21)));
         textView2.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView2.setText("Location :");
         textView2.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -122,10 +123,10 @@ public class History extends AppCompatActivity {
         ConstraintLayout.LayoutParams layoutParams2 = (ConstraintLayout.LayoutParams) textView2.getLayoutParams();
         layoutParams2.bottomToBottom = R.id.constraintLayout3;
         layoutParams2.endToEnd = R.id.constraintLayout3;
-        layoutParams2.horizontalBias = 0.523f;
+        layoutParams2.horizontalBias = 0.629f;
         layoutParams2.startToStart = R.id.constraintLayout3;
         layoutParams2.topToTop = R.id.constraintLayout3;
-        layoutParams2.verticalBias = 0.20f;
+        layoutParams2.verticalBias = 0.078f;
 
         textView2.setLayoutParams(layoutParams2);
 
@@ -133,7 +134,7 @@ public class History extends AppCompatActivity {
 
         TextView textView3 = new TextView(this);
         textView3.setId(R.id.fare);
-        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(100), dpToPx(21)));
+        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(102), dpToPx(21)));
         textView3.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView3.setText("Destination :");
         textView3.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -142,10 +143,10 @@ public class History extends AppCompatActivity {
         ConstraintLayout.LayoutParams layoutParams3 = (ConstraintLayout.LayoutParams) textView3.getLayoutParams();
         layoutParams3.bottomToBottom = R.id.constraintLayout3;
         layoutParams3.endToEnd = R.id.constraintLayout3;
-        layoutParams3.horizontalBias = 0.523f;
+        layoutParams3.horizontalBias = 0.629f;
         layoutParams3.startToStart = R.id.constraintLayout3;
         layoutParams3.topToTop = R.id.constraintLayout3;
-        layoutParams3.verticalBias = 0.70f;
+        layoutParams3.verticalBias = 0.638f;
 
         textView3.setLayoutParams(layoutParams3);
 
@@ -174,20 +175,26 @@ public class History extends AppCompatActivity {
 
         TextView textView5 = new TextView(this);
         textView5.setId(R.id.codeInfo);
-        textView5.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(49)));
+        textView5.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         textView5.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView5.setText(start);
         textView5.setTextColor(ContextCompat.getColor(this, R.color.black));
         textView5.setTextSize(15);
         textView5.setTypeface(textView4.getTypeface(), Typeface.BOLD);
 
+
         ConstraintLayout.LayoutParams layoutParams5 = (ConstraintLayout.LayoutParams) textView5.getLayoutParams();
-        layoutParams5.bottomToBottom = R.id.constraintLayout3;
-        layoutParams5.endToEnd = R.id.constraintLayout3;
-        layoutParams5.horizontalBias = 0.523f;
+        layoutParams5.bottomToTop = R.id.fare;
         layoutParams5.startToStart = R.id.constraintLayout3;
-        layoutParams5.topToTop = R.id.constraintLayout3;
-        layoutParams5.verticalBias = 0.60f;
+        layoutParams5.topToBottom = R.id.location;
+        layoutParams5.verticalBias = 1.0f;
+
+
+        layoutParams5.leftMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                148,
+                getResources().getDisplayMetrics()
+        );
 
         textView5.setLayoutParams(layoutParams5);
 
@@ -195,7 +202,7 @@ public class History extends AppCompatActivity {
 
         TextView textView6 = new TextView(this);
         textView6.setId(R.id.codeInfo);
-        textView6.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(49)));
+        textView6.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         textView6.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView6.setText(end);
         textView6.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -204,11 +211,15 @@ public class History extends AppCompatActivity {
 
         ConstraintLayout.LayoutParams layoutParams6 = (ConstraintLayout.LayoutParams) textView6.getLayoutParams();
         layoutParams6.bottomToBottom = R.id.constraintLayout3;
-        layoutParams6.endToEnd = R.id.constraintLayout3;
-        layoutParams6.horizontalBias = 0.523f;
         layoutParams6.startToStart = R.id.constraintLayout3;
-        layoutParams6.topToTop = R.id.constraintLayout3;
-        layoutParams6.verticalBias = 1.2f;
+        layoutParams6.topToBottom = R.id.fare;
+        layoutParams6.verticalBias = 0.0f;
+
+        layoutParams6.leftMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                148,
+                getResources().getDisplayMetrics()
+        );
 
         textView6.setLayoutParams(layoutParams6);
 

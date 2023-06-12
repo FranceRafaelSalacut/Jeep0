@@ -86,10 +86,10 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintHorizontal_bias="0.041"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.079"
+            app:layout_constraintVertical_bias="0.071"
             app:srcCompat="@drawable/baseline_arrow_back_24" />
 
         <Button

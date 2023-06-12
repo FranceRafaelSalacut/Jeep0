@@ -143,7 +143,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         recieve = getIntent();
         back = (ImageView) findViewById(R.id.back_button2);
-        test = (TextView) findViewById(R.id.textView3);
+        //test = (TextView) findViewById(R.id.textView3);
         save = findViewById(R.id.button4);
         jeepneyCode = recieve.getStringExtra("Code");
         String dist = recieve.getStringExtra("Dist");
@@ -156,7 +156,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         code = (TextView) findViewById(R.id.codeInfo2);
         code.setText(jeepneyCode);
-        test.setText(from);
+        //test.setText(from);
         getRoutePath();
 
         mapView = findViewById(R.id.mapView3);
