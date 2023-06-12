@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class History extends AppCompatActivity {
 
             cursor.close();
         }
- // Close the database connection after use
+        // Close the database connection after use
         database.close();
 
         disp.addView(layout);
@@ -84,12 +85,12 @@ public class History extends AppCompatActivity {
         ConstraintLayout constraintLayout = new ConstraintLayout(this);
         constraintLayout.setId(R.id.constraintLayout3);
         //constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(97)));
-        constraintLayout.setBackgroundResource(R.drawable.  rounded_border);
+        constraintLayout.setBackgroundResource(R.drawable.rounded_border);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                dpToPx(120)
+                LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.setMargins(0, 0, 0, 16); // Set margin bottom of 16 pixels
+        layoutParams.setMargins(0, dpToPx(10), 0, 0); // Set margin bottom of 16 pixels
         constraintLayout.setLayoutParams(layoutParams);
 
         TextView textView1 = new TextView(this);
@@ -113,7 +114,7 @@ public class History extends AppCompatActivity {
         constraintLayout.addView(textView1);
 
         TextView textView2 = new TextView(this);
-        textView2.setId(R.id.km);
+        textView2.setId(R.id.location);
         textView2.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(85), dpToPx(21)));
         textView2.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView2.setText("Location :");
@@ -123,10 +124,10 @@ public class History extends AppCompatActivity {
         ConstraintLayout.LayoutParams layoutParams2 = (ConstraintLayout.LayoutParams) textView2.getLayoutParams();
         layoutParams2.bottomToBottom = R.id.constraintLayout3;
         layoutParams2.endToEnd = R.id.constraintLayout3;
-        layoutParams2.horizontalBias = 0.629f;
+        layoutParams2.horizontalBias = 0.453f;
         layoutParams2.startToStart = R.id.constraintLayout3;
         layoutParams2.topToTop = R.id.constraintLayout3;
-        layoutParams2.verticalBias = 0.078f;
+        layoutParams2.verticalBias = 0.075f;
 
         textView2.setLayoutParams(layoutParams2);
 
@@ -134,7 +135,7 @@ public class History extends AppCompatActivity {
 
         TextView textView3 = new TextView(this);
         textView3.setId(R.id.fare);
-        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(102), dpToPx(21)));
+        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(102), dpToPx(22)));
         textView3.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
         textView3.setText("Destination :");
         textView3.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -143,10 +144,10 @@ public class History extends AppCompatActivity {
         ConstraintLayout.LayoutParams layoutParams3 = (ConstraintLayout.LayoutParams) textView3.getLayoutParams();
         layoutParams3.bottomToBottom = R.id.constraintLayout3;
         layoutParams3.endToEnd = R.id.constraintLayout3;
-        layoutParams3.horizontalBias = 0.629f;
+        layoutParams3.horizontalBias = 0.478f;
         layoutParams3.startToStart = R.id.constraintLayout3;
         layoutParams3.topToTop = R.id.constraintLayout3;
-        layoutParams3.verticalBias = 0.638f;
+        layoutParams3.verticalBias = 0.645f;
 
         textView3.setLayoutParams(layoutParams3);
 
@@ -182,6 +183,12 @@ public class History extends AppCompatActivity {
         textView5.setTextSize(15);
         textView5.setTypeface(textView4.getTypeface(), Typeface.BOLD);
 
+        textView5.setAutoSizeTextTypeUniformWithConfiguration(
+                12,
+                24,
+                2,
+                TypedValue.COMPLEX_UNIT_SP // unit for sizes
+        );
 
         ConstraintLayout.LayoutParams layoutParams5 = (ConstraintLayout.LayoutParams) textView5.getLayoutParams();
         layoutParams5.bottomToTop = R.id.fare;
@@ -192,7 +199,7 @@ public class History extends AppCompatActivity {
 
         layoutParams5.leftMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                148,
+                123,
                 getResources().getDisplayMetrics()
         );
 
@@ -209,6 +216,13 @@ public class History extends AppCompatActivity {
         textView6.setTextSize(15);
         textView6.setTypeface(textView4.getTypeface(), Typeface.BOLD);
 
+        textView6.setAutoSizeTextTypeUniformWithConfiguration(
+                12,
+                24,
+                2,
+                TypedValue.COMPLEX_UNIT_SP // unit for sizes
+        );
+
         ConstraintLayout.LayoutParams layoutParams6 = (ConstraintLayout.LayoutParams) textView6.getLayoutParams();
         layoutParams6.bottomToBottom = R.id.constraintLayout3;
         layoutParams6.startToStart = R.id.constraintLayout3;
@@ -217,13 +231,47 @@ public class History extends AppCompatActivity {
 
         layoutParams6.leftMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                148,
+                123,
                 getResources().getDisplayMetrics()
         );
 
         textView6.setLayoutParams(layoutParams6);
 
         constraintLayout.addView(textView6);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setId(R.id.imageView6);
+        imageView.setImageResource(R.drawable.baseline_close_24);
+        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(19), dpToPx(19)));
+
+        ConstraintLayout.LayoutParams layoutParams7 = (ConstraintLayout.LayoutParams) imageView.getLayoutParams();
+
+        layoutParams7.bottomToBottom = R.id.constraintLayout3;
+        layoutParams7.endToEnd = R.id.constraintLayout3;
+        layoutParams7.startToStart = R.id.constraintLayout3;
+        layoutParams7.topToTop = R.id.constraintLayout3;
+
+        layoutParams7.horizontalBias = 0.959f;
+        layoutParams7.verticalBias = 0.097f;
+        imageView.setLayoutParams(layoutParams7);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layout.removeView(constraintLayout);
+
+                SQLiteDatabase database = myDB.getReadableDatabase();
+                String whereClause = "CODE = ? AND START = ? AND END = ?";
+                String[] whereArgs = {code, start, end};
+
+                database.delete("HISTORY", whereClause, whereArgs);
+
+                database.close();
+            }
+        });
+
+// Add the ImageView to the parent view
+        constraintLayout.addView(imageView);
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

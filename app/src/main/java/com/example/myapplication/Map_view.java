@@ -373,7 +373,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
 
 
-       // test.setText("YES?");
+        // test.setText("YES?");
 
         drawTest();
 
@@ -572,10 +572,10 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         pq.addAll(distanceMap.entrySet());
 
-        int[] closestIndices = new int[8];
+        int[] closestIndices = new int[3];
         int count = 0;
 
-        while (count < 8 && !pq.isEmpty()) {
+        while (count < 3 && !pq.isEmpty()) {
             Map.Entry<Integer, Double> entry = pq.poll();
             closestIndices[count] = entry.getKey();
             count++;

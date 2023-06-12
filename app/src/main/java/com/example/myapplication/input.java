@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class input extends AppCompatActivity implements OnMapReadyCallback, OnMa
     private GoogleMap googleMap;
     AutoCompleteTextView location, destination;
     Button findJeep;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,15 @@ public class input extends AppCompatActivity implements OnMapReadyCallback, OnMa
         location = (AutoCompleteTextView) findViewById(R.id.initialInputText);
         destination = (AutoCompleteTextView) findViewById(R.id.initialDesiredText);
         findJeep = findViewById(R.id.calculateFare);
+        back = findViewById(R.id.back_button2);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+            }
+        });
 
         SQLiteDatabase db = myDB.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT DISTINCT Location FROM Jeepney", null);
