@@ -35,12 +35,12 @@ public class List_of_Jeeps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listofjeeps);
 
-        disp = (ScrollView) findViewById(R.id.disp);
+        disp = (ScrollView) findViewById(R.id.scrollView3);
 
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        test = (TextView) findViewById(R.id.textView4);
-        back = findViewById(R.id.back_button2);
+        //test = (TextView) findViewById(R.id.textView4);
+        back = findViewById(R.id.back_button);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

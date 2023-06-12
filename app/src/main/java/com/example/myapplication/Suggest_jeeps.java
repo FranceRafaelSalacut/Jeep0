@@ -36,13 +36,13 @@ public class Suggest_jeeps extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listofjeeps);
 
-        disp = (ScrollView) findViewById(R.id.disp);
+        disp = (ScrollView) findViewById(R.id.scrollView3);
 
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        test = (TextView) findViewById(R.id.textView4);
-        back = findViewById(R.id.back_button2);
-        list = findViewById(R.id.textView4);
+        //test = (TextView) findViewById(R.id.textView4);
+        back = findViewById(R.id.back_button);
+        //list = findViewById(R.id.textView4);
 
         receive = getIntent();
         start = receive.getStringExtra("start");

@@ -41,4 +41,5 @@
     <string name="calculate_fare">Calculate Fare</string>
     <string name="location">Location:</string>
     <string name="destination">Destination:</string>
+    <string name="route_history">Route History</string>
 </resources>

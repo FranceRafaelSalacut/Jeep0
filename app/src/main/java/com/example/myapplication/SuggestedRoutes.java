@@ -1,3 +1,4 @@
+/**
 package com.example.myapplication;
 
 import androidx.appcompat.app.AlertDialog;
@@ -43,6 +44,7 @@ public class SuggestedRoutes extends AppCompatActivity {
     ScrollView Disp;
     LinearLayout layout;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suggested_routes);
@@ -265,7 +267,7 @@ public class SuggestedRoutes extends AppCompatActivity {
             layout.addView(button);
 //            layout.addView(text2);
         }
-         **/
+
         cursor.close();
         db.close();
 //        Disp.addView(layout);
@@ -341,4 +343,6 @@ public class SuggestedRoutes extends AppCompatActivity {
         return totalFare;
     }
 
+
 }
+     **/
