@@ -45,11 +45,12 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/calculateFare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:backgroundTint="#5CC297"
+            android:enabled="true"
             android:fontFamily="@font/poppins_new"
             android:text="@string/calculate_fare"
             android:textColor="@color/black"
@@ -59,7 +60,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText"
+            android:id="@+id/inputDistance"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
@@ -78,7 +79,7 @@
 
 
         <Switch
-            android:id="@+id/switch3"
+            android:id="@+id/hasDiscount"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:text="Student/Senior/PWD"
@@ -86,10 +87,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.87"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/inputDistance" />
 
         <Switch
-            android:id="@+id/switch4"
+            android:id="@+id/isModern"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginBottom="12dp"
@@ -99,7 +100,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.905"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch3"
+            app:layout_constraintTop_toBottomOf="@+id/hasDiscount"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/textKm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -130,7 +131,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/textFare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -142,7 +143,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/textDiscount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="208dp"
@@ -150,6 +151,8 @@
             android:textColor="@color/black"
             android:textSize="32sp"
             app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textKm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -157,7 +160,7 @@
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/textView13"
+            app:layout_constraintBottom_toTopOf="@+id/textFare"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

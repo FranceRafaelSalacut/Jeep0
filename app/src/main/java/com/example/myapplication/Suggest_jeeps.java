@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +20,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Suggest_jeeps extends AppCompatActivity {
 
     ScrollView disp;
@@ -32,7 +28,7 @@ public class Suggest_jeeps extends AppCompatActivity {
     TextView test, list;
     ImageView back;
 
-    Intent recieve;
+    Intent receive;
     String start, end;
 
 
@@ -48,9 +44,9 @@ public class Suggest_jeeps extends AppCompatActivity {
         back = findViewById(R.id.back_button2);
         list = findViewById(R.id.textView4);
 
-        recieve = getIntent();
-        start = recieve.getStringExtra("start");
-        end = recieve.getStringExtra("end");
+        receive = getIntent();
+        start = receive.getStringExtra("start");
+        end = receive.getStringExtra("end");
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
