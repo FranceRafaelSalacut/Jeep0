@@ -85,7 +85,7 @@ public class List_of_Jeeps extends AppCompatActivity {
 
 // Create a ShapeDrawable for the border
             ShapeDrawable borderDrawable = new ShapeDrawable();
-            borderDrawable.getPaint().setColor(Color.BLACK);
+            borderDrawable.getPaint().setColor(Color.parseColor("#5CC297"));
             borderDrawable.getPaint().setStyle(Paint.Style.STROKE);
             borderDrawable.getPaint().setStrokeWidth(5);
 

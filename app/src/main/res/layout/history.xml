@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="13dp"
-        android:background="@color/white"
         android:textAlignment="center"
+        android:background="#C1EAD9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="710dp"
         android:layout_marginTop="52dp"
-        android:background="#C1EAD9"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
         tools:layout_editor_absoluteX="0dp">
 
@@ -57,16 +57,16 @@
                 android:layout_marginBottom="15dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:background="#5CC297"
                 android:text="@string/route_date"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_new"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="97dp"
-                android:background="@drawable/round_border_white">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_border">
 
 
                 <TextView
@@ -85,44 +85,44 @@
                     app:layout_constraintVertical_bias="0.21" />
 
                 <TextView
-                    android:id="@+id/km"
-                    android:layout_width="45dp"
+                    android:id="@+id/location"
+                    android:layout_width="85dp"
                     android:layout_height="21dp"
                     android:fontFamily="@font/poppins_new"
-                    android:text="@string/km_text"
+                    android:text="@string/location"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.523"
+                    app:layout_constraintHorizontal_bias="0.629"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.21" />
+                    app:layout_constraintVertical_bias="0.078" />
 
                 <TextView
                     android:id="@+id/fare"
-                    android:layout_width="45dp"
-                    android:layout_height="21dp"
+                    android:layout_width="102dp"
+                    android:layout_height="22dp"
                     android:fontFamily="@font/poppins_new"
-                    android:text="@string/fare_text"
+                    android:text="@string/destination"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.956"
+                    app:layout_constraintHorizontal_bias="0.678"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.21" />
+                    app:layout_constraintVertical_bias="0.638" />
 
                 <TextView
                     android:id="@+id/codeInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="49dp"
-                    android:fontFamily="@font/poppins_new"
                     android:text="@string/code_input"
                     android:textColor="@color/black"
                     android:textSize="32sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/poppins_new"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.08"
@@ -131,36 +131,36 @@
                     app:layout_constraintVertical_bias="0.77" />
 
                 <TextView
-                    android:id="@+id/kmInfo"
+                    android:id="@+id/locationInput"
                     android:layout_width="wrap_content"
-                    android:layout_height="49dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="148dp"
+                    android:text="TextView"
                     android:fontFamily="@font/poppins_new"
-                    android:text="@string/km_input"
-                    android:textColor="@color/black"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.528"
+                    app:autoSizeMaxTextSize="24sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@+id/fare"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.77" />
+                    app:layout_constraintTop_toBottomOf="@+id/location"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/fareInfo"
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
-                    android:layout_height="49dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="148dp"
+                    android:text="TextView"
                     android:fontFamily="@font/poppins_new"
-                    android:text="@string/_15"
-                    android:textColor="@color/black"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="24sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.921"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.77" />
+                    app:layout_constraintTop_toBottomOf="@+id/fare"
+                    app:layout_constraintVertical_bias="0.0" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
