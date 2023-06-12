@@ -430,7 +430,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
 
         }
 
-        PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.rgb(69, 75, 27)).width(10);
+        PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.rgb(1, 183, 0)).width(10);
         googleMap.addPolyline(opts);
 
 

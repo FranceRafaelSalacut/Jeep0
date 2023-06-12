@@ -84,7 +84,7 @@ public class History extends AppCompatActivity {
         ConstraintLayout constraintLayout = new ConstraintLayout(this);
         constraintLayout.setId(R.id.constraintLayout3);
         //constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(97)));
-        constraintLayout.setBackgroundResource(R.drawable.rounded_border);
+        constraintLayout.setBackgroundResource(R.drawable.  rounded_border);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 dpToPx(120)
