@@ -18,10 +18,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import android.os.Bundle;
@@ -99,6 +101,8 @@ import com.google.android.gms.maps.MapsInitializer.Renderer;
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -136,6 +140,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     String start, end, jeepneyCode, from;
     Double Distance, Fare;
     public static Double before = 0.0;
+    Switch hasDiscount, isModern;
+    double fared, modernFare;
 
     Boolean isSaved = false;
 
@@ -158,6 +164,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         end = recieve.getStringExtra("Destination");
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);
         isSaved = checkSAVED();
+        hasDiscount = findViewById(R.id.discountSwitch2);
+        isModern = findViewById(R.id.jeepSwitch);
 
         code = (TextView) findViewById(R.id.codeInfo2);
         code.setText(jeepneyCode);
@@ -212,6 +220,41 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
+            }
+        });
+
+        hasDiscount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                double fare = fared;
+                if(isChecked) {
+                    if(isModern.isChecked()){
+                        fare = modernFare;
+                    }
+                    fare *= 0.8;
+                }else{
+                    if(isModern.isChecked()){
+                        fare = modernFare;
+                    }
+                }
+                Fare = fare;
+                displayFare(fare);
+            }
+        });
+
+        isModern.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                double fare = modernFare, baseFare = 14.00;
+                if(!isChecked) {
+                    fare = fared;
+                    //fare = calculateFare((float) ((double) Distance), (float) baseFare, (float) 2.20, (float) 4);
+                }
+                if(hasDiscount.isChecked()){
+                    fare *= 0.8;
+                }
+                Fare = fare;
+                displayFare(fare);
             }
         });
 
@@ -417,8 +460,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         double maxDistance = Double.MAX_VALUE;
 
         for (int[] pair : nonRepeatingPairs) {
-            putMarker(path.get(pair[0]));
-            putMarker(path.get(pair[1]));
+//            putMarker(path.get(pair[0]));
+//            putMarker(path.get(pair[1]));
             Log.d(TAG, pair[0] + "---" + pair[1]);
             List<LatLng> routed = tracePath(path, pair[0], pair[1]);
             double totalDistance = getDistance(routed);
@@ -459,13 +502,15 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         distance = findViewById(R.id.codeInfo3);
         distance.setText(String.format("%.2f", totalDistance/1000));
 
-        double fared = calculateFare((float) totalDistance/1000, (float) 12.00, (float) 1.80, (float) 4);
+        fared = calculateFare((float) totalDistance/1000, (float) 12.00, (float) 1.80, (float) 4);
+        modernFare = calculateFare((float) totalDistance/1000, (float) 14.00, (float) 2.20, (float) 4);
 
         Fare = fared;
         fare = findViewById(R.id.fareInfo3);
         fare.setText(String.format("%.2f", fared));
 
     }
+
 
     private double getDistance(List<LatLng> routed){
         int i = 0;
@@ -584,6 +629,11 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         return closestIndices;
     }
 
+    public void displayFare(double fared){
+        Fare = fared;
+        fare = findViewById(R.id.fareInfo3);
+        fare.setText(String.format("%.2f", fared));
+    }
 
 
     public static double calculateDistance(LatLng location1, LatLng location2) {

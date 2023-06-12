@@ -173,7 +173,7 @@ public class Suggest_jeeps extends AppCompatActivity {
             dialog.show();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("There are no ROUTES on your inputs. Try placing new inputs!")
+            builder.setMessage("There are no ROUTES on your inputs. Try placing new inputs.")
                     .setTitle("Sorry");
 
 // Add a button to dismiss the dialog

@@ -25,6 +25,7 @@ public class History extends AppCompatActivity {
 
     ScrollView disp;
     LinearLayout layout;
+    ImageView back;
 
     DatabaseHelper myDB = new DatabaseHelper(this);
 
@@ -32,6 +33,7 @@ public class History extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
+        back = findViewById(R.id.back_button);
 
         disp = findViewById(R.id.scrollView3);
         layout = new LinearLayout(this);
@@ -78,6 +80,14 @@ public class History extends AppCompatActivity {
         database.close();
 
         disp.addView(layout);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Menu.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
