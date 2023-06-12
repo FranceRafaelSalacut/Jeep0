@@ -78,7 +78,7 @@ public class List_of_Jeeps extends AppCompatActivity {
             String jeepneyCode = cursor.getString(cursor.getColumnIndexOrThrow("CODE"));
             String loca = cursor.getString(cursor.getColumnIndexOrThrow("Locations"));
 
-            ConstraintLayout constraintLayout = makeLayout(jeepneyCode, loca);
+            ConstraintLayout constraintLayout = makeLayout(jeepneyCode, loca, "");
 
             layout.addView(constraintLayout);
             //result.append(jeepneyCode).append("\t");//("\n");
@@ -97,11 +97,11 @@ public class List_of_Jeeps extends AppCompatActivity {
 
     }
 
-    private ConstraintLayout makeLayout(String code, String locs){
+    private ConstraintLayout makeLayout(String code, String start, String end){
         ConstraintLayout constraintLayout = new ConstraintLayout(this);
-        constraintLayout.setId(R.id.constraintLayout4);
+        constraintLayout.setId(R.id.constraintLayout3);
         //constraintLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(97)));
-        constraintLayout.setBackgroundResource(R.drawable.  rounded_border);
+        constraintLayout.setBackgroundResource(R.drawable.rounded_border);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -111,19 +111,19 @@ public class List_of_Jeeps extends AppCompatActivity {
 
         TextView textView1 = new TextView(this);
         textView1.setId(R.id.code);
-        textView1.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(85), dpToPx(21)));
+        textView1.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(45), dpToPx(21)));
         textView1.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
-        textView1.setText("route");
+        textView1.setText("CODE");
         textView1.setTextColor(ContextCompat.getColor(this, R.color.black));
         textView1.setTextSize(16);
 
         ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) textView1.getLayoutParams();
-        layoutParams1.bottomToBottom = R.id.constraintLayout4;
-        layoutParams1.endToEnd = R.id.constraintLayout4;
-        layoutParams1.horizontalBias = 0.453f;
-        layoutParams1.startToStart = R.id.constraintLayout4;
-        layoutParams1.topToTop = R.id.constraintLayout4;
-        layoutParams1.verticalBias = 0.75f;
+        layoutParams1.bottomToBottom = R.id.constraintLayout3;
+        layoutParams1.endToEnd = R.id.constraintLayout3;
+        layoutParams1.horizontalBias = 0.07f;
+        layoutParams1.startToStart = R.id.constraintLayout3;
+        layoutParams1.topToTop = R.id.constraintLayout3;
+        layoutParams1.verticalBias = 0.21f;
 
         textView1.setLayoutParams(layoutParams1);
 
@@ -131,19 +131,19 @@ public class List_of_Jeeps extends AppCompatActivity {
 
         TextView textView2 = new TextView(this);
         textView2.setId(R.id.location);
-        textView2.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(49)));
+        textView2.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(85), dpToPx(21)));
         textView2.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
-        textView2.setText(code);//CODE HERE
+        textView2.setText("Route :");
         textView2.setTextColor(ContextCompat.getColor(this, R.color.black));
-        textView2.setTextSize(32);
+        textView2.setTextSize(16);
 
         ConstraintLayout.LayoutParams layoutParams2 = (ConstraintLayout.LayoutParams) textView2.getLayoutParams();
-        layoutParams2.bottomToBottom = R.id.constraintLayout4;
-        layoutParams2.endToEnd = R.id.constraintLayout4;
-        layoutParams2.horizontalBias = 0.08f;
-        layoutParams2.startToStart = R.id.constraintLayout4;
-        layoutParams2.topToTop = R.id.constraintLayout4;
-        layoutParams2.verticalBias = 0.77f;
+        layoutParams2.bottomToBottom = R.id.constraintLayout3;
+        layoutParams2.endToEnd = R.id.constraintLayout3;
+        layoutParams2.horizontalBias = 0.453f;
+        layoutParams2.startToStart = R.id.constraintLayout3;
+        layoutParams2.topToTop = R.id.constraintLayout3;
+        layoutParams2.verticalBias = 0.075f;
 
         textView2.setLayoutParams(layoutParams2);
 
@@ -151,38 +151,119 @@ public class List_of_Jeeps extends AppCompatActivity {
 
         TextView textView3 = new TextView(this);
         textView3.setId(R.id.fare);
-        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView3.setLayoutParams(new ConstraintLayout.LayoutParams(dpToPx(102), dpToPx(22)));
         textView3.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
-        textView3.setText(locs);
+        textView3.setText("");
         textView3.setTextColor(ContextCompat.getColor(this, R.color.black));
         textView3.setTextSize(16);
 
-        textView2.setAutoSizeTextTypeUniformWithConfiguration(
+        ConstraintLayout.LayoutParams layoutParams3 = (ConstraintLayout.LayoutParams) textView3.getLayoutParams();
+        layoutParams3.bottomToBottom = R.id.constraintLayout3;
+        layoutParams3.endToEnd = R.id.constraintLayout3;
+        layoutParams3.horizontalBias = 0.478f;
+        layoutParams3.startToStart = R.id.constraintLayout3;
+        layoutParams3.topToTop = R.id.constraintLayout3;
+        layoutParams3.verticalBias = 0.645f;
+
+        textView3.setLayoutParams(layoutParams3);
+
+        constraintLayout.addView(textView3);
+
+        TextView textView4 = new TextView(this);
+        textView4.setId(R.id.codeInfo);
+        textView4.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dpToPx(49)));
+        textView4.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
+        textView4.setText(code);
+        textView4.setTextColor(ContextCompat.getColor(this, R.color.black));
+        textView4.setTextSize(32);
+        textView4.setTypeface(textView4.getTypeface(), Typeface.BOLD);
+
+        ConstraintLayout.LayoutParams layoutParams4 = (ConstraintLayout.LayoutParams) textView4.getLayoutParams();
+        layoutParams4.bottomToBottom = R.id.constraintLayout3;
+        layoutParams4.endToEnd = R.id.constraintLayout3;
+        layoutParams4.horizontalBias = 0.08f;
+        layoutParams4.startToStart = R.id.constraintLayout3;
+        layoutParams4.topToTop = R.id.constraintLayout3;
+        layoutParams4.verticalBias = 0.77f;
+
+        textView4.setLayoutParams(layoutParams4);
+
+        constraintLayout.addView(textView4);
+
+        TextView textView5 = new TextView(this);
+        textView5.setId(R.id.codeInfo);
+        textView5.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView5.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
+        textView5.setText(start);
+        textView5.setTextColor(ContextCompat.getColor(this, R.color.black));
+        textView5.setTextSize(15);
+        textView5.setTypeface(textView4.getTypeface(), Typeface.BOLD);
+
+        textView5.setAutoSizeTextTypeUniformWithConfiguration(
                 12,
                 24,
                 2,
                 TypedValue.COMPLEX_UNIT_SP // unit for sizes
         );
 
-        ConstraintLayout.LayoutParams layoutParams3 = (ConstraintLayout.LayoutParams) textView3.getLayoutParams();
-        layoutParams3.startToStart = R.id.constraintLayout4;
-        layoutParams3.topToBottom = R.id.code;
+        ConstraintLayout.LayoutParams layoutParams5 = (ConstraintLayout.LayoutParams) textView5.getLayoutParams();
+        layoutParams5.bottomToTop = R.id.fare;
+        layoutParams5.startToStart = R.id.constraintLayout3;
+        layoutParams5.topToBottom = R.id.location;
+        layoutParams5.verticalBias = 1.0f;
 
-        layoutParams3.leftMargin = (int) TypedValue.applyDimension(
+
+        layoutParams5.leftMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 123,
                 getResources().getDisplayMetrics()
         );
 
+        textView5.setLayoutParams(layoutParams5);
 
-        textView3.setLayoutParams(layoutParams3);
-        constraintLayout.addView(textView3);
+        constraintLayout.addView(textView5);
+
+        TextView textView6 = new TextView(this);
+        textView6.setId(R.id.codeInfo);
+        textView6.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        textView6.setTypeface(ResourcesCompat.getFont(this, R.font.poppins_new));
+        textView6.setText("");
+        textView6.setTextColor(ContextCompat.getColor(this, R.color.black));
+        textView6.setTextSize(15);
+        textView6.setTypeface(textView4.getTypeface(), Typeface.BOLD);
+
+        textView6.setAutoSizeTextTypeUniformWithConfiguration(
+                12,
+                24,
+                2,
+                TypedValue.COMPLEX_UNIT_SP // unit for sizes
+        );
+
+        ConstraintLayout.LayoutParams layoutParams6 = (ConstraintLayout.LayoutParams) textView6.getLayoutParams();
+        layoutParams6.bottomToBottom = R.id.constraintLayout3;
+        layoutParams6.startToStart = R.id.constraintLayout3;
+        layoutParams6.topToBottom = R.id.fare;
+        layoutParams6.verticalBias = 0.0f;
+
+        layoutParams6.leftMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                123,
+                getResources().getDisplayMetrics()
+        );
+
+        textView6.setLayoutParams(layoutParams6);
+
+        constraintLayout.addView(textView6);
+
+
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Route_view.class);
                 intent.putExtra("Code", code);
+                intent.putExtra("Route", start);
                 startActivity(intent);
             }
         });

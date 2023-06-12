@@ -123,14 +123,15 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
     LatLng location1;
     LatLng location2;
 
+    TextView show1, show2;
 
     ArrayList<String> route = new ArrayList<>();
-    String start, end, jeepneyCode;
+    String start, end, jeepneyCode, routed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.selected_route);
+        setContentView(R.layout.hist_selected_route);
 
         MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
 
@@ -139,6 +140,12 @@ public class Route_view extends AppCompatActivity implements OnMapReadyCallback,
         //test = (TextView) findViewById(R.id.textView3);
 
         jeepneyCode = recieve.getStringExtra("Code");
+        routed = recieve.getStringExtra("Route");
+        show1 = findViewById(R.id.codeInfo2);
+        show1.setText(jeepneyCode);
+
+        show2 = findViewById(R.id.textView);
+        show2.setText(routed);
         //test.setText("Jeep Code: " + jeepneyCode + "\t Distance: " + dist + "\t Approx Fare: " + fare);;
         try {
             mapView = findViewById(R.id.mapView3);

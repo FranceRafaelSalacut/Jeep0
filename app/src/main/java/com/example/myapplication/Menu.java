@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,5 +50,22 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ImageView imageView5 = findViewById(R.id.commute_news);
+        imageView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.facebook.com/LTFRB7/"; // Replace with your desired website URL
+                openWebsite(url);
+            }
+        });
+    }
+
+    private void openWebsite(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
