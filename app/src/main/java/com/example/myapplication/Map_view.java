@@ -101,6 +101,8 @@ import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -113,6 +115,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 public class Map_view extends AppCompatActivity implements OnMapReadyCallback, OnMapsSdkInitializedCallback {
 
@@ -131,6 +135,7 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     ArrayList<String> route = new ArrayList<>();
     String start, end, jeepneyCode, from;
     Double Distance, Fare;
+    public static Double before = 0.0;
 
     Boolean isSaved = false;
 
@@ -391,35 +396,48 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         List<LatLng> path = new ArrayList();
         getRoute(path);
 
-        int startLatlng = findClosestCoordinateIndex(location1, path);
-        int endLatlng = findClosestCoordinateIndex(location2, path);
+        int[] startLatlng = findFiveClosestCoordinateIndices(location1, path);
+        int[] endLatlng = findFiveClosestCoordinateIndices(location2, path);
 
+        Log.d(TAG, Arrays.toString(startLatlng));
+        Log.d(TAG, Arrays.toString(endLatlng));
         //test.setText(startLatlng + "\n" + endLatlng);
+        List<int[]> nonRepeatingPairs = new ArrayList<>();
 
-        boolean add = false;
-        int size = path.size();
-        int index = startLatlng;
-        List<LatLng> route = new ArrayList();
-
-        while(true){
-            if(index == size){
-                index = 0;
+        for (int i = 0; i < startLatlng.length; i++) {
+            for (int j = 0; j < endLatlng.length; j++) {
+                if (startLatlng[i] != endLatlng[j]) {
+                    int[] pair = {startLatlng[i], endLatlng[j]};
+                    nonRepeatingPairs.add(pair);
+                }
             }
-
-            route.add(path.get(index));
-
-            if(index == endLatlng){
-                break;
-            }
-            index+=1;
         }
+
+        List<LatLng> route = new ArrayList();
+        double maxDistance = Double.MAX_VALUE;
+
+        for (int[] pair : nonRepeatingPairs) {
+            putMarker(path.get(pair[0]));
+            putMarker(path.get(pair[1]));
+            Log.d(TAG, pair[0] + "---" + pair[1]);
+            List<LatLng> routed = tracePath(path, pair[0], pair[1]);
+            double totalDistance = getDistance(routed);
+
+            if(totalDistance<maxDistance){
+                maxDistance = totalDistance;
+                route = routed;
+            }
+
+        }
+
+        PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.rgb(69, 75, 27)).width(10);
+        googleMap.addPolyline(opts);
+
+
 
         for (int i = 0; i < route.size(); i++) {
             //putMarker(route.get(i));
         }
-
-        PolylineOptions opts = new PolylineOptions().addAll(route).color(Color.BLUE).width(10);
-        googleMap.addPolyline(opts);
 
         double totalDistance = 0.0;
         int i = 0;
@@ -447,6 +465,48 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         fare = findViewById(R.id.fareInfo3);
         fare.setText(String.format("%.2f", fared));
 
+    }
+
+    private double getDistance(List<LatLng> routed){
+        int i = 0;
+        double totalDistance = 0.0;
+        while(true) {
+            if(i+1 == routed.size()){
+                break;
+            }
+            LatLng point1 = routed.get(i);
+            LatLng point2 = routed.get(i + 1);
+
+            double distance = SphericalUtil.computeDistanceBetween(point1, point2);
+            totalDistance += distance;
+
+            i++;
+        }
+
+        return totalDistance;
+    }
+
+
+    private List<LatLng> tracePath(List<LatLng> path, int start, int end){
+        boolean add = false;
+        int size = path.size();
+        int index = start;
+        List<LatLng> route = new ArrayList();
+
+        while(true){
+            if(index == size){
+                index = 0;
+            }
+
+            route.add(path.get(index));
+
+            if(index == end){
+                break;
+            }
+            index+=1;
+        }
+
+        return route;
     }
 
     private void putMarker(LatLng mark){
@@ -498,21 +558,33 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
         return path;
     }
 
-    public static int findClosestCoordinateIndex(LatLng location, List<LatLng> path) {
-        double closestDistance = Double.MAX_VALUE;
-        int closestIndex = -1;
+    public static int[] findFiveClosestCoordinateIndices(LatLng location, List<LatLng> path) {
+        Map<Integer, Double> distanceMap = new HashMap<>();
 
         for (int i = 0; i < path.size(); i++) {
             LatLng coordinate = path.get(i);
             double distance = calculateDistance(location, coordinate);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = i;
-            }
+            distanceMap.put(i, distance);
         }
 
-        return closestIndex;
+        PriorityQueue<Map.Entry<Integer, Double>> pq = new PriorityQueue<>(
+                Comparator.comparingDouble(Map.Entry::getValue));
+
+        pq.addAll(distanceMap.entrySet());
+
+        int[] closestIndices = new int[8];
+        int count = 0;
+
+        while (count < 8 && !pq.isEmpty()) {
+            Map.Entry<Integer, Double> entry = pq.poll();
+            closestIndices[count] = entry.getKey();
+            count++;
+        }
+
+        return closestIndices;
     }
+
+
 
     public static double calculateDistance(LatLng location1, LatLng location2) {
         double earthRadius = 6371;  // Radius of the Earth in kilometers
