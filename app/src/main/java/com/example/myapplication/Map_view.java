@@ -128,6 +128,8 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
     Intent recieve;
     TextView code, distance, fare, test;
     ImageView back;
+
+    ImageView call;
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MapView mapView;
     private GoogleMap googleMap;
@@ -255,6 +257,29 @@ public class Map_view extends AppCompatActivity implements OnMapReadyCallback, O
                 }
                 Fare = fare;
                 displayFare(fare);
+            }
+        });
+
+        call = findViewById(R.id.imageView);
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Map_view.this);
+                builder.setMessage("If you are having trouble you can contact LTFRN region VII with the following number - 0906-381156.")
+                        .setTitle("Want to Report?");
+
+// Add a button to dismiss the dialog
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button, do something
+                        dialog.dismiss();
+                    }
+                });
+
+// Create and show the dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

@@ -15,6 +15,17 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
+        ImageView about = findViewById(R.id.imageView7);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), aboutus.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         ImageView imageView = findViewById(R.id.suggestedRoute);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +67,9 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String url = "https://www.facebook.com/LTFRB7/"; // Replace with your desired website URL
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+                startActivity(browserIntent);
+
                 openWebsite(url);
             }
         });
@@ -64,6 +78,7 @@ public class Menu extends AppCompatActivity {
     private void openWebsite(String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Add this line
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }

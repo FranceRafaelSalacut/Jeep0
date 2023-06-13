@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -268,15 +270,37 @@ public class History extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layout.removeView(constraintLayout);
+                AlertDialog.Builder builder = new AlertDialog.Builder(History.this);
+                builder.setMessage("Are you sure you want to remove?s``")
+                        .setTitle("Warning!");
 
-                SQLiteDatabase database = myDB.getReadableDatabase();
-                String whereClause = "CODE = ? AND START = ? AND END = ?";
-                String[] whereArgs = {code, start, end};
+// Add a button to dismiss the dialog
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button, do something
+                        layout.removeView(constraintLayout);
 
-                database.delete("HISTORY", whereClause, whereArgs);
+                        SQLiteDatabase database = myDB.getReadableDatabase();
+                        String whereClause = "CODE = ? AND START = ? AND END = ?";
+                        String[] whereArgs = {code, start, end};
 
-                database.close();
+                        database.delete("HISTORY", whereClause, whereArgs);
+
+                        database.close();
+
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button, do something
+                        dialog.dismiss();
+                    }
+                });
+
+// Create and show the dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
